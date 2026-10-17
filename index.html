@@ -162,9 +162,9 @@ h2 button.info{vertical-align:.25em}
 .filt select.cmp{flex:0 0 auto}
 .ctlgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px 12px;margin-top:10px}
 .ctlgrid label{display:flex;flex-direction:column;gap:4px;font-size:.68rem;font-weight:800;letter-spacing:.12em;color:var(--muted)}
-/* no text selection or long-press menu while dragging across charts, the map or the year toggles (iPhone, 10/10) */
+/* no text selection or long-press menu while dragging across charts, the map or the year toggles (iPhone) */
 .hchart,.hchart *,.mapwrap,.mapwrap *,#hyears,#hyears *,.ctlgrid label,.tbar{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
-/* round 5: headings beside their numbers; one-row year toggles; turnout scale; star separators */
+/* headings beside their numbers; one-row year toggles; turnout scale; star separators */
 .sh{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin:42px 0 14px;padding-top:18px;border-top:1.5px solid var(--ink)}
 .sh .n{font-family:var(--num);font-weight:400;font-size:30px;line-height:1;color:var(--pred);font-variation-settings:normal}
 #hyears{display:grid !important;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
@@ -175,7 +175,7 @@ h2 button.info{vertical-align:.25em}
 .tscale{position:relative;font-size:.72rem;font-weight:800;color:var(--muted);margin-bottom:14px}
 .tscale span,.tscale em{position:absolute;white-space:nowrap;font-style:normal}.tscale em{color:var(--ink);padding:0 4px}
 .sep{color:var(--muted);font-size:.72em;vertical-align:.1em;margin:0 .1em}
-/* round 6: the big number's drop shadow on other key numbers; more blue and red text (all pairs pass WCAG AA) */
+/* the big number's drop shadow on other key numbers; more blue and red text (all pairs pass WCAG AA) */
 .card b,.tsub b,.mailstats .tsub b,.dpanel .lead b.n{font-family:var(--num);font-weight:400;color:#4a7fa3;text-shadow:.06em .06em 0 var(--pred)}
 :root:not([data-theme="light"]) .card b,:root:not([data-theme="light"]) .tsub b,:root:not([data-theme="light"]) .dpanel .lead b.n{color:var(--slate)}
 :root[data-theme="light"] .card b,:root[data-theme="light"] .tsub b,:root[data-theme="light"] .dpanel .lead b.n{color:#4a7fa3}
@@ -366,7 +366,7 @@ table.vtype tr.vsub[hidden]{display:none}
 .cwr{margin:12px 0 0;border:1.5px solid var(--ink);border-radius:10px;padding:10px 14px}.cwr>summary{cursor:pointer;font-weight:800}
 .cwr .race{margin:10px 0 12px}.cwr .lead b.n{font-family:var(--num);font-weight:400;font-size:1.25rem;margin-right:8px}
 .cwr.full{margin:0 0 22px}.cwr.full+.cwr.full{margin-top:-10px}
-b.res{text-shadow:none!important}   /* results leads: party color, no drop shadow (user 10/14) */
+b.res{text-shadow:none!important}   /* results leads: party color, no drop shadow */
 b.res:not(.d):not(.r){color:var(--ink)!important}   /* "Even" in the text color (light blue without its shadow is too faint) */
 .unop{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:8px}.cwr.full .races{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:4px 28px}
 .ballot-r .race{margin:8px 0 12px}.ballot-r .dl{font-size:.85em;color:var(--muted)}
@@ -903,7 +903,7 @@ document.querySelectorAll('#hmode button').forEach(x=>x.setAttribute('aria-press
 let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(draw,120)});draw();
 })();
 </script><script>
-(function(){   // turnout bar (ui_v4 round 5)
+(function(){   // turnout bar (ui_v4)
  const box=document.getElementById('tbar'),note=document.getElementById('tnote'),sc=document.getElementById('tscale');if(!box)return;
  const F=JSON.parse(document.getElementById('figs').textContent);
  const R=REGCTY[0],n={};B.forEach(b=>{n[b[3]]=(n[b[3]]||0)+b[12]});const tot=F.ctot||BN(),share=tot/R;
@@ -1002,7 +1002,7 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
   grid.appendChild(wrapL('SCALE',proxy(document.getElementById('hscale'),'s','Scale','sel sm')));
   grid.appendChild(wrapL('TIME RANGE',proxy(document.getElementById('hrange'),'r','Time range','sel sm')));
   hm.before(grid);
-  // years: one toggle per year (user, 10/10), under a YEARS label below the menus; the colored line on each is the legend
+  // years: one toggle per year, under a YEARS label below the menus; the colored line on each is the legend
   const hy=document.getElementById('hyears');if(hy){const l=document.createElement('div');l.className='lbl';l.textContent='YEARS';l.style.marginBottom='4px';hy.style.marginTop='0';grid.after(l);l.after(hy)}}
 })();
 </script><script>
@@ -1043,7 +1043,7 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
    const pd=x.pastd||{},k=(C[x.id]||[]).length,same=Object.keys(pd).sort().reverse().filter(y=>pd[y].length>=k);
    if(key==='ev'&&has&&k&&same.length)h+='<div class="agehd">Through day '+k+' of early voting</div><table><tr><td>2026</td><td>'+x.n.toLocaleString()+'</td></tr>'+same.map(y=>{const v=pd[y].slice(0,k).reduce((a,b)=>a+b,0);return '<tr><td>'+y+'</td><td>'+v.toLocaleString()+(v?' <span class="sub">(2026 at '+Math.round(100*x.n/v)+'%)</span>':'')+'</td></tr>'}).join('')+'</table>';
    if(key==='ev')h+=yrs.length?'<div class="agehd">Final early vote at this site</div><table>'+yrs.map(y=>'<tr><td>'+y+'</td><td>'+pa[y].toLocaleString()+'</td></tr>').join('')+'</table>':'<div class="sub">Not an early voting site in 2018–2024 under this name, so there’s no comparison.</div>';
-   else h+=yrs.length?'<div class="agehd">Election Day votes at this site</div><table>'+(has?'<tr><td>2026</td><td>'+x.n.toLocaleString()+'</td></tr>':'')+yrs.map(y=>'<tr><td>'+y+'</td><td>'+pa[y].toLocaleString()+(has&&pa[y]?' <span class="sub">(2026 at '+Math.round(100*x.n/pa[y])+'%)</span>':'')+'</td></tr>').join('')+'</table>':'<div class="sub">Not a vote center in 2022 or 2024 under this name, so there’s no comparison.</div>';   // Election Day comparisons by building (user, 10/13)
+   else h+=yrs.length?'<div class="agehd">Election Day votes at this site</div><table>'+(has?'<tr><td>2026</td><td>'+x.n.toLocaleString()+'</td></tr>':'')+yrs.map(y=>'<tr><td>'+y+'</td><td>'+pa[y].toLocaleString()+(has&&pa[y]?' <span class="sub">(2026 at '+Math.round(100*x.n/pa[y])+'%)</span>':'')+'</td></tr>').join('')+'</table>':'<div class="sub">Not a vote center in 2022 or 2024 under this name, so there’s no comparison.</div>';   // Election Day comparisons by building
    if(window.siteRes)h+=window.siteRes(key,x.id);   // add_results.py
    if(x.approx)h+='<div class="meta">Map location is approximate for now.</div>';
    pop.innerHTML=h};
@@ -1119,7 +1119,7 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
  function choices(list){opts.innerHTML='';list.forEach(([lab,fn])=>{const b=document.createElement('button');b.type='button';b.textContent=lab;b.onclick=fn;opts.appendChild(b)})}
  function openPct(p,note){const li={com:0,jp:1,cd:2,sd:3,hd:4,sboe:5,city:6}[layer];let id=p;
   if(layer!=='pct'){if(li!=null&&ATTR[p]&&GEO[layer][String(ATTR[p][li])]!=null)id=String(ATTR[p][li]);else if(li!=null&&ATTR[p]&&GEO[layer][String(+ATTR[p][li])]!=null)id=String(+ATTR[p][li]);else{const ls=$('laysel');ls.value='pct';ls.dispatchEvent(new Event('change'))}}
-  pinned=id;show(id);msg.textContent=note||'';   // user 10/14: no message when the address is found; the panel opens
+  pinned=id;show(id);msg.textContent=note||'';   // no message when the address is found; the panel opens
   const pp=$('pop');if(pp&&pp.getBoundingClientRect().top>innerHeight-80)pp.scrollIntoView({behavior:'smooth',block:'start'})}
  window.findAddr=async function(q,force){opts.innerHTML='';try{await load()}catch(e){msg.textContent='This browser can’t search addresses. Try your precinct number (it’s on your voter registration card).';return}
   let T=q.toUpperCase().replace(/[.,#]/g,' ').replace(/\s+/g,' ').trim().split(' ');const m=T[0].match(/^(\d+)/);if(!m){msg.textContent='Start with the house number, like 2810 Hanna Ave.';return}
@@ -1183,7 +1183,7 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
  function tally(ri,pl){const n=RC[ri].c.length,t=new Array(n).fill(0),mi=MI();let any=false;pl.forEach(([p,w])=>{const v=(P[p]||{})[ri];if(!v)return;any=true;for(let c=0;c<n;c++)t[c]+=w*(mi===undefined?v[0][c]+v[1][c]+v[2][c]:v[mi][c])});return any?t.map(Math.round):null}
  const dr=(ri,t)=>{let d=0,r=0;RC[ri].c.forEach(([n,p],i)=>{if(p==='DEM')d+=t[i];if(p==='REP')r+=t[i]});return [d,r]};
  const leadB=(d,r,cls)=>{const n=d+r,ld=Math.round(100*(d-r)/n);return ld>0?'<b class="'+(cls||'n')+' res d">D+'+ld+'</b>':ld<0?'<b class="'+(cls||'n')+' res r">R+'+(-ld)+'</b>':'<b class="'+(cls||'n')+' res">Even</b>'};
- // race heading: the lead where D and R both run, "Unopposed" in its place for a single candidate, else just the name (user 10/14)
+ // race heading: the lead where D and R both run, "Unopposed" in its place for a single candidate, else just the name
  const unop=ri=>RC[ri].c.filter(x=>x[1]).length===1;
  function head(ri,t,st){const tot=t?t.reduce((a,b)=>a+b,0):0,a='<div class="lead"'+(st?' style="'+st+'"':'')+'>';
   if(unop(ri))return a+'<span class="unop">Unopposed</span>'+RC[ri].l+'</div>';
