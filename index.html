@@ -370,15 +370,64 @@ b.res{text-shadow:none!important}   /* results leads: party color, no drop shado
 b.res:not(.d):not(.r){color:var(--ink)!important}   /* "Even" in the text color (light blue without its shadow is too faint) */
 .unop{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:8px}.cwr.full .races{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:4px 28px}
 .ballot-r .race{margin:8px 0 12px}.ballot-r .dl{font-size:.85em;color:var(--muted)}
+
+/* ui_round15.py */
+.hero{align-items:stretch}
+.heroL{border-radius:12px;justify-content:center}
+.mailnote{margin:-4px 0 0;font-size:.78rem;color:var(--muted);text-align:left}
+.card i{text-align:left}
+.card .cnt{display:block;margin-top:2px}
+.card span .pctn{font-weight:700;letter-spacing:.06em}
+.card i small.cnt{display:block;margin-top:3px;font-size:1em;font-weight:400;color:var(--muted)}
+.heroR nav.jump{gap:6px}.heroR nav.jump a{font-size:.78rem;padding:4px 10px}
+@media (min-width:761px){
+ .hero{column-gap:32px;padding-bottom:28px;margin-bottom:26px}
+ .heroR{padding:0!important;gap:14px}
+ .heroR nav.jump{margin:0}
+ .heroR .disc{margin:0}
+}
+@media (max-width:760px){.heroR{padding:22px 2px 24px!important}}
+.mapctl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 22px;align-items:start}
+.mapctl .cg>.lbl:first-child,.mapctl .find>label{margin-top:0}
+.mapctl select,.mapctl .sel{width:100%;max-width:none}
+.mapctl .find{margin:0}
+.mapctl .find>label{display:flex;align-items:center;min-height:24px;font-weight:800;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+.mapctl .findrow{display:flex;gap:6px}.mapctl .findrow input{flex:1;min-width:0}
+.mapctl .findrow input,.mapctl .findrow button{box-sizing:border-box;height:42px}
+.mapctl details.more{margin-top:10px}
+@media (max-width:760px){.mapctl{grid-template-columns:minmax(0,1fr)}}
+.snapbar{margin:16px 0 12px;padding:12px 14px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg)}
+.snaphd{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.snaphd .lbl{margin:0}
+#snapd{font-size:1.05rem;font-weight:800;color:var(--ink)}
+.snaplat{font-size:.68rem;font-weight:800;letter-spacing:.1em;color:var(--blue);border:1.5px solid currentColor;border-radius:999px;padding:1px 7px}
+.snaphint{margin-left:auto;font-size:.78rem;color:var(--muted)}
+.snapbar .snap{display:flex;align-items:center;gap:12px;margin:6px 0 0;font-size:.8rem;font-weight:700;color:var(--muted)}
+.snapbar .snap input{flex:1;min-width:0;accent-color:var(--blue);margin:0}
+.snapbar .se{white-space:nowrap;font-variant-numeric:tabular-nums}
+@media (max-width:760px){.snaphint{display:none}}
+@media (min-width:1100px){
+ .popcol .summary{margin:0 0 12px}
+ .popcol .legend{margin:0 0 14px;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px}
+ .popcol #layernote{margin:-6px 0 12px}
+ .popcol .legend .ramp{margin-top:6px}
+}
+/* even spacing: the method tabs sit midway between the top section and the first heading; the Voters columns
+   don't add their last item's bottom margin to the gap before the next heading */
+.hero{margin-bottom:32px!important}
+section.panel>h2.sh:first-of-type{margin-top:32px}
+.demos{margin-bottom:-18px}
+.demos i.pc{font-style:italic;font-size:.86em;color:var(--muted);margin-left:1px}
+.demos .note i.pc{font-size:1em}
 </style></head><body><main>
 <!--HERO-->
 <header class="mast"><span class="upd" id="upd" data-at="2026-10-17T15:55:08-05:00">MAIL BALLOT REPORT MADE 10.17, 3:55:08 PM CT</span></header>
 <h1 class="title">Tracking the Early Vote in Tarrant County</h1>
 <div class="hero">
-<div class="heroL"><div class="lab">BALLOTS CAST</div><div class="big" style="--em:3.50">10,688</div><div class="bigsub">ballots so far</div><div><span class="badge lg">+1,164 ON OCT. 17</span></div><p class="cta">Want to be a part of this number? <a href="#plan" class="planlink">Plan your vote<span aria-hidden="true"> →</span></a></p></div>
-<div class="heroR"><p class="disc">Not endorsed by any candidate or campaign. Not a political advertisement. Early estimates, not results. On election night the county’s results take their place as they come in, and these estimates and the daily snapshots stay on the map to compare; see <a href="#how" class="howlink">How this works</a>.</p><div class="cards"><div class="card"><b>10,488</b><span>NAMED VOTERS</span><i><em class="d">4,739 D history</em> <span class="sep" aria-hidden="true">✦</span> <em class="r">3,639 R history</em> <span class="sep" aria-hidden="true">✦</span> <em class="x">199 redacted</em></i></div><div class="card"><b class="d">D+12</b><span>ESTIMATED LEAD</span><i>Estimated share: <em class="d">D 56%</em> <span class="sep" aria-hidden="true">✦</span> <em class="r">R 44%</em><br>Range: <em class="d">D 45–66%</em> <span class="sep" aria-hidden="true">✦</span> <em class="r">R 34–55%</em></i></div></div></div>
+<div class="heroL"><div class="lab">BALLOTS CAST</div><div class="big" style="--em:3.50">10,688</div><div class="bigsub">ballots so far</div><div><span class="badge lg">+1,164 ON OCT. 17</span></div><p class="mailnote">Mail counts rarely update on Sundays and postal holidays.</p><p class="cta">Want to be a part of this number? <a href="#plan" class="planlink">Plan your vote<span aria-hidden="true"> →</span></a></p></div>
+<div class="heroR"><p class="disc">Not endorsed by any candidate or campaign. Not a political advertisement. Early estimates, not results. On election night the county’s results take their place as they come in, and these estimates and the daily snapshots stay on the map to compare; see <a href="#how" class="howlink">How this works</a>.</p><div class="cards"><div class="card"><b>10,488</b><span>NAMED VOTERS <span class="sep" aria-hidden="true">✦</span> <span class="pctn">98% OF BALLOTS</span></span><i><em class="d">4,739 D history</em> <span class="sep" aria-hidden="true">✦</span> <em class="r">3,639 R history</em> <span class="sep" aria-hidden="true">✦</span> <em class="m">94 split evenly</em> <span class="sep" aria-hidden="true">✦</span> <em class="x">2,016 no party history</em><small class="cnt">The other 199 ballots are redacted.</small></i></div><div class="card"><b class="d">D+12</b><span>ESTIMATED LEAD</span><i>Estimated share: <em class="d">D 56%</em> <span class="sep" aria-hidden="true">✦</span> <em class="r">R 44%</em><br>Range: <em class="d">D 45–66%</em> <span class="sep" aria-hidden="true">✦</span> <em class="r">R 34–55%</em></i></div></div></div>
 </div>
-<script type="application/json" id="figs">{"est": 0.5608, "lo": 0.4478, "hi": 0.6551, "dp": 56, "dlo": 45, "dhi": 66, "show_est": false, "age65_regular_mail": "9741 of 10063", "age65_sent_electronically": "57 of 263", "ctot": 10688, "listed": 10687, "daily": [["9/24", 2, 0, 0], ["9/25", 4, 0, 0], ["9/28", 22, 0, 0], ["9/29", 18, 0, 0], ["9/30", 14, 0, 0], ["10/1", 22, 0, 0], ["10/2", 24, 0, 0], ["10/3", 23, 0, 0], ["10/5", 37, 0, 0], ["10/6", 94, 0, 0], ["10/7", 212, 0, 0], ["10/8", 605, 0, 0], ["10/9", 1122, 0, 0], ["10/13", 2377, 0, 0], ["10/14", 1384, 0, 0], ["10/15", 1850, 0, 0], ["10/16", 1714, 0, 0], ["10/17", 1164, 0, 0]], "report_time": "2026-10-17T15:55:08", "fpca": 426, "regmail": 10262, "abs_through": "10/17"}</script>
+<script type="application/json" id="figs">{"est": 0.5608, "lo": 0.4478, "hi": 0.6551, "dp": 56, "dlo": 45, "dhi": 66, "show_est": false, "age65_regular_mail": "9741 of 10063", "age65_sent_electronically": "57 of 263", "ctot": 10688, "mtot": 10688, "evtot": 0, "evna": false, "listed": 10687, "daily": [["9/24", 2, 0, 0], ["9/25", 4, 0, 0], ["9/28", 22, 0, 0], ["9/29", 18, 0, 0], ["9/30", 14, 0, 0], ["10/1", 22, 0, 0], ["10/2", 24, 0, 0], ["10/3", 23, 0, 0], ["10/5", 37, 0, 0], ["10/6", 94, 0, 0], ["10/7", 212, 0, 0], ["10/8", 605, 0, 0], ["10/9", 1122, 0, 0], ["10/13", 2377, 0, 0], ["10/14", 1384, 0, 0], ["10/15", 1850, 0, 0], ["10/16", 1714, 0, 0], ["10/17", 1164, 0, 0]], "report_time": "2026-10-17T15:55:08", "fpca": 426, "regmail": 10262, "abs_through": "10/17"}</script>
 <!--/HERO-->
 <div class="wrap">
 <div class="row" role="tablist" id="tabs">
@@ -395,16 +444,14 @@ b.res:not(.d):not(.r){color:var(--ink)!important}   /* "Even" in the text color 
  <div class="mapctl"><div class="cg"><div class="lbl">BOUNDARIES</div>
  <select id="laysel" class="sel" aria-label="Boundaries"></select>
  <div class="row" id="msrow"><button id="mstog" aria-pressed="false">Select several precincts</button></div>
- <div class="find"><label for="findin">Find on the map</label><div class="findrow"><input id="findin" type="search" list="findlist" autocomplete="off" placeholder="Precinct, place or home address"><button id="findgo" type="button">Show</button></div><datalist id="findlist"></datalist><p class="findmsg" id="findmsg" role="status" aria-live="polite"></p><div class="findopts" id="findopts"></div></div>
  </div><div class="cg"><div class="lbl">SHADING</div>
  <select id="shsel" class="sel" aria-label="Shading"><option value="ret">Voters’ party history</option><option value="prim">March primary result</option><option value="diff">Shift from the primary</option><option value="d24">Shift from 2024 (president)</option><option value="turn">Turnout</option></select>
  <p class="shexp" id="shexp"></p>
- </div><div class="cg"><details class="more" id="moreopt"><summary>More options<span class="mon" id="moreon"></span></summary><div class="lbl">CENSUS FILTER</div>
+ </div><div class="cg cgfind"><div class="find"><label for="findin">Find on the map</label><div class="findrow"><input id="findin" type="search" list="findlist" autocomplete="off" placeholder="Precinct, place or home address"><button id="findgo" type="button">Show</button></div><datalist id="findlist"></datalist><p class="findmsg" id="findmsg" role="status" aria-live="polite"></p><div class="findopts" id="findopts"></div></div><details class="more" id="moreopt"><summary>More options<span class="mon" id="moreon"></span></summary><div class="lbl">CENSUS FILTER</div>
  <div class="filt" id="filt" data-on="0"><select id="fm" aria-label="Census measure"></select><div class="row on" id="fcmp" role="group" aria-label="Comparison"><button data-c="ge" aria-pressed="true">At least</button><button data-c="lt" aria-pressed="false">Under</button></div><input class="on" type="range" id="fv" aria-label="Threshold"><span class="on" id="fvd"></span></div>
  <p class="fnote" id="fnote">Census figures describe the people who live in an area, not the people who returned ballots. Areas with fewer than 100 adult citizens are never selected.</p>
- </details></div><div class="cg"><div class="lbl">SNAPSHOT</div>
- <div class="snap"><input type="range" id="snap" min="0" value="0" aria-label="Snapshot date"><span id="snapd"></span></div>
- </div></div>
+ </details></div></div>
+ <div class="snapbar"><div class="snaphd"><span class="lbl" id="snaplbl">MAP AS OF</span><b id="snapd"></b><span class="snaplat" id="snaplat" hidden>LATEST</span><span class="snaphint">Slide back to see any earlier day</span></div><div class="snap"><span class="se" id="snap0" aria-hidden="true"></span><input type="range" id="snap" min="0" value="0" aria-labelledby="snaplbl snapd"><span class="se" id="snap1" aria-hidden="true"></span></div></div>
  <div class="summary" id="summary"></div>
  <div class="maprow"><div class="mapcol"><div class="mapwrap" id="wrap">
   <div class="mapbar"><span id="maptitle"></span><div class="zoom" role="group" aria-label="Map zoom"><button id="zout" aria-label="Zoom out">&minus;</button><button id="zin" aria-label="Zoom in">+</button><button id="zall" aria-label="Reset the map view">Reset</button></div></div>
@@ -436,7 +483,7 @@ b.res:not(.d):not(.r){color:var(--ink)!important}   /* "Even" in the text color 
  <p class="note" id="pacenote">Each year is lined up by days before its Election Day (Nov. 6, 2018; Nov. 3, 2020; Nov. 8, 2022; Nov. 5, 2024; Nov. 3, 2026). Early in-person voting ran from 15 to 4 days before Election Day, except in 2020, when it started 21 days out. Dashed lines are midterms. Source: Tarrant County daily totals. Mail ballots that arrived after Election Day are left off.</p>
  <!--WHO--><h2 class="sh"><span class="n">03</span>Voters</h2>
 <p class="note" id="whonote" style="margin-top:0">Countywide, through 10/17. Each table counts only ballots where that detail is known. Regular-mail voters with a known age who are 65 or older: 9741 of 10063; sent electronically: 57 of 263.</p>
-<div class="demos"><div><h3>Age</h3><table class="demo"><tr class="h"><td></td><td>Ballots</td><td>Registered voters</td></tr><tr><td>18–29</td><td>105 (1%)</td><td>21%</td></tr><tr><td>30–44</td><td>119 (1%)</td><td>27%</td></tr><tr><td>45–64</td><td>304 (3%)</td><td>31%</td></tr><tr><td>65+</td><td>9,798 (95%)</td><td>21%</td></tr></table><p class="note">361 unknown</p></div><div><h3>Gender</h3><table class="demo"><tr class="h"><td></td><td>Ballots</td><td>Registered voters</td></tr><tr><td>Women</td><td>5,615 (56%)</td><td>53%</td></tr><tr><td>Men</td><td>4,373 (44%)</td><td>47%</td></tr></table><p class="note">699 unknown</p></div><div><h3>First registered</h3><table class="demo"><tr class="h"><td></td><td>Ballots</td></tr><tr><td>2024 or later</td><td>815 (8%)</td></tr><tr><td>2020–2023</td><td>1,037 (10%)</td></tr><tr><td>2016–2019</td><td>964 (9%)</td></tr><tr><td>2006–2015</td><td>1,507 (15%)</td></tr><tr><td>Before 2006</td><td>6,003 (58%)</td></tr></table><p class="note">361 unknown</p></div><div><h3>Vote type</h3><table class="demo vtype"><tr class="h"><td></td><td>Ballots</td></tr><tr><td><button type="button" class="vtog" aria-expanded="false" aria-controls="vsub1 vsub2">Mail</button></td><td>10,688</td></tr><tr class="vsub" id="vsub1" hidden><td>Regular mail</td><td>10,262</td></tr><tr class="vsub" id="vsub2" hidden><td>FPCA</td><td>426</td></tr><tr><td>Early in person</td><td data-vt="ev">Starts Oct. 19</td></tr><tr><td>Election Day</td><td data-vt="vc">Nov. 3</td></tr></table><p class="note">County totals through 10/17. FPCA ballots go to military and overseas voters.</p></div></div>
+<div class="demos"><div><h3>Age</h3><table class="demo"><tr class="h"><td></td><td>Ballots</td><td>Registered voters</td></tr><tr><td>18–29</td><td>105 (1%)</td><td>21%</td></tr><tr><td>30–44</td><td>119 (1%)</td><td>27%</td></tr><tr><td>45–64</td><td>304 (3%)</td><td>31%</td></tr><tr><td>65+</td><td>9,798 (95%)</td><td>21%</td></tr></table><p class="note">361 unknown (3%)</p></div><div><h3>Gender</h3><table class="demo"><tr class="h"><td></td><td>Ballots</td><td>Registered voters</td></tr><tr><td>Women</td><td>5,615 (56%)</td><td>53%</td></tr><tr><td>Men</td><td>4,373 (44%)</td><td>47%</td></tr></table><p class="note">699 unknown (7%)</p></div><div><h3>First registered</h3><table class="demo"><tr class="h"><td></td><td>Ballots</td></tr><tr><td>2024 or later</td><td>815 (8%)</td></tr><tr><td>2020–2023</td><td>1,037 (10%)</td></tr><tr><td>2016–2019</td><td>964 (9%)</td></tr><tr><td>2006–2015</td><td>1,507 (15%)</td></tr><tr><td>Before 2006</td><td>6,003 (58%)</td></tr></table><p class="note">361 unknown (3%)</p></div><div><h3>Vote type</h3><table class="demo vtype"><tr class="h"><td></td><td>Ballots</td></tr><tr><td><button type="button" class="vtog" aria-expanded="false" aria-controls="vsub1 vsub2">Mail</button></td><td>10,688</td></tr><tr class="vsub" id="vsub1" hidden><td>Regular mail</td><td>10,262</td></tr><tr class="vsub" id="vsub2" hidden><td>FPCA</td><td>426</td></tr><tr><td>Early in person</td><td data-vt="ev">Starts Oct. 19</td></tr><tr><td>Election Day</td><td data-vt="vc">Nov. 3</td></tr></table><p class="note">County totals through 10/17. FPCA ballots go to military and overseas voters.</p></div></div>
 <!--/WHO-->
  <h2 class="sh"><span class="n">04</span>Daily returns</h2>
  <div class="hchart" id="dchart"><svg id="dsvg" role="img" aria-label="Ballots received per day, with the running total"></svg><div class="htip" id="dtip" hidden></div></div>
@@ -828,16 +875,16 @@ function whoFor(){   // make_public.py: from the latest day's totals
  const AGE=[['a18_29','18–29',1],['a30_44','30–44',2],['a45_64','45–64',3],['a65','65+',4]],RBK=[['r0','2024 or later'],['r1','2020–2023'],['r2','2016–2019'],['r3','2006–2015'],['r4','Before 2006']];
  const ka=AGE.reduce((t,[k])=>t+cnt('ag',k),0),ra=REGCTY[3]+REGCTY[4]+REGCTY[5]+REGCTY[6],F=cnt('sx','F'),Mm=cnt('sx','M'),fb=Math.round(100*REGCTY[1]/(REGCTY[1]+REGCTY[2])),kr=RBK.reduce((t,[k])=>t+cnt('rg',k),0);
  const tb=(rows,heads)=>'<table class="demo"><tr class="h">'+heads.map(h=>'<td>'+h+'</td>').join('')+'</tr>'+rows.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</table>';
- let h='<div><h3>Age</h3>'+tb(AGE.map(([k,l,i])=>[l,SP(cnt('ag',k),ka),Math.round(100*REGCTY[2+i]/ra)+'%']),['','Ballots','Registered voters'])+'<p class="note">'+f(n-ka)+' unknown</p></div>'
-  +'<div><h3>Gender</h3>'+tb([['Women',SP(F,F+Mm),fb+'%'],['Men',SP(Mm,F+Mm),(100-fb)+'%']],['','Ballots','Registered voters'])+'<p class="note">'+f(n-F-Mm)+' unknown</p></div>'
-  +'<div><h3>First registered</h3>'+tb(RBK.map(([k,l])=>[l,SP(cnt('rg',k),kr)]),['','Ballots'])+'<p class="note">'+f(n-kr)+' unknown</p></div>';
+ let h='<div><h3>Age</h3>'+tb(AGE.map(([k,l,i])=>[l,SP(cnt('ag',k),ka),Math.round(100*REGCTY[2+i]/ra)+'%']),['','Ballots','Registered voters'])+'<p class="note">'+f(n-ka)+' unknown'+(u=>u>=5&&n?' ('+(Math.round(100*u/n)<1?'<1':Math.round(100*u/n))+'%)':'')(n-ka)+'</p></div>'
+  +'<div><h3>Gender</h3>'+tb([['Women',SP(F,F+Mm),fb+'%'],['Men',SP(Mm,F+Mm),(100-fb)+'%']],['','Ballots','Registered voters'])+'<p class="note">'+f(n-F-Mm)+' unknown'+(u=>u>=5&&n?' ('+(Math.round(100*u/n)<1?'<1':Math.round(100*u/n))+'%)':'')(n-F-Mm)+'</p></div>'
+  +'<div><h3>First registered</h3>'+tb(RBK.map(([k,l])=>[l,SP(cnt('rg',k),kr)]),['','Ballots'])+'<p class="note">'+f(n-kr)+' unknown'+(u=>u>=5&&n?' ('+(Math.round(100*u/n)<1?'<1':Math.round(100*u/n))+'%)':'')(n-kr)+'</p></div>';
  if(window.MF==='M'){const FG=JSON.parse(document.getElementById('figs').textContent);if(FG.fpca!=null)h+='<div><h3>Ballot type</h3>'+tb([['Regular mail',FG.regmail.toLocaleString()],['FPCA',FG.fpca.toLocaleString()]],['','Ballots'])+'<p class="note">County totals through '+FG.abs_through+'. FPCA ballots go to military and overseas voters.</p></div>'}
  d.innerHTML=h;if(w)w.textContent=({M:'Mail ballots',E:'Early in-person voters',D:'Election Day voters'}[window.MF])+', through '+DATES[DATES.length-1]+'. Each table counts only ballots where that detail is known.'}
 function setMethod(t){
  window.MF={all:null,mail:'M',early:'E',eday:'D'}[t]??null;
  B.length=0;B_ALL.forEach(b=>{if(!window.MF||b[3]===window.MF)B.push(b)});
  const nt=document.getElementById('mfnote'),none=!B.length;
- if(nt){nt.hidden=!none;nt.textContent=({E:'No early in-person votes yet. Early voting runs Oct. 19–30; this tab fills in from the county’s daily early-voting roster.',D:'No Election Day votes yet. Election Day is Nov. 3; this tab fills in on election night from the county’s Election Day roster and results.',M:'No mail ballots yet.'}[window.MF])||''}
+ if(nt){nt.hidden=!none;nt.textContent=({E:(()=>{let G={};try{G=JSON.parse(document.getElementById('figs').textContent)}catch(e){}return G.evtot?G.evtot.toLocaleString()+' early in-person votes so far, from the county’s daily totals. The map and tables for early voting fill in once the county’s early voting roster is matched to voters.':G.evna?'Early in-person counts aren’t in this update. They’re added from the county’s daily totals as soon as it posts them.':'No early in-person votes yet. Early voting runs Oct. 19–30; this tab fills in from the county’s daily early-voting roster.'})(),D:'No Election Day votes yet. Election Day is Nov. 3; this tab fills in on election night from the county’s Election Day roster and results.',M:'No mail ballots yet.'}[window.MF])||''}
  document.querySelectorAll('section[data-p~="all"]>*:not(.mfnote)').forEach(e=>{e.classList.toggle('mfhide',none)});
  if(window.MF){const hm=document.querySelector('#hmode button[data-m="'+(window.MF==='M'?'mail':'inperson')+'"]');if(hm&&hm.getAttribute('aria-pressed')!=='true')hm.click()}
  pinned=null;draw();whoFor();document.dispatchEvent(new Event('methodchange'))}
@@ -872,10 +919,10 @@ function draw(){
  const step=mode==='inperson'?1:(dmax-dmin>24?5:dmax-dmin>10?2:1);for(let d=dmin;d<=dmax;d+=(mode==='inperson'?1:1)){if(mode==='mail'&&d%step)continue;if(mode==='inperson'&&W<520&&d%2)continue;g.appendChild(el('line',{x1:X(d),x2:X(d),y1:m.t,y2:H-m.b,stroke:'#efe7da'}));g.appendChild(el('text',{x:X(d),y:H-m.b+fs+5,'text-anchor':'middle','font-size':fs,fill:'#6b4a35'},d===0?'Elec. Day':String(d)))}
  g.appendChild(el('text',{x:(m.l+W-m.r)/2,y:H-6,'text-anchor':'middle','font-size':fs,fill:'#6b4a35'},'Days before Election Day'));
  g.appendChild(el('line',{x1:m.l,x2:m.l,y1:m.t,y2:H-m.b,stroke:'#3b2418'}));g.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:H-m.b,y2:H-m.b,stroke:'#3b2418'}));
- YEARS.forEach(([y,col,dash,lw,r],i)=>{const p=S[i];if(!p.length)return;const d=p.map((q,k)=>(k?'L':'M')+X(q.d).toFixed(1)+' '+Y(q.v).toFixed(1)).join('');
+ const ENDL=[];YEARS.forEach(([y,col,dash,lw,r],i)=>{const p=S[i];if(!p.length)return;const d=p.map((q,k)=>(k?'L':'M')+X(q.d).toFixed(1)+' '+Y(q.v).toFixed(1)).join('');
   svg.appendChild(el('path',{d,fill:'none',stroke:col,'stroke-width':lw,'stroke-dasharray':dash,'stroke-linejoin':'round'}));
   p.forEach(q=>svg.appendChild(el('circle',{cx:X(q.d),cy:Y(q.v),r,fill:col,stroke:'#fffbef','stroke-width':1})));
-  const L=p.at(-1);svg.appendChild(el('text',{x:X(L.d)+6,y:Y(L.v)+4,'font-size':fs,'font-weight':y==='2026'?'bold':'normal',fill:'#3b2418'},y+' ✦ '+cmp(L.v)))});
+  const L=p.at(-1);ENDL.push([X(L.d)+6,Y(L.v)+4,y,cmp(L.v)])});ENDL.sort((a,b)=>a[1]-b[1]);for(let k=1;k<ENDL.length;k++)if(ENDL[k][1]-ENDL[k-1][1]<fs+3)ENDL[k][1]=ENDL[k-1][1]+fs+3;ENDL.forEach(([x,yy,y,v])=>svg.appendChild(el('text',{x,y:yy,'font-size':fs,'font-weight':y==='2026'?'bold':'normal',fill:'#3b2418'},y+' ✦ '+v)));
  // the year buttons above the chart are the legend
  const cur=el('line',{y1:m.t,y2:H-m.b,stroke:'#6b4a35','stroke-width':1,visibility:'hidden'});svg.appendChild(cur);
  const dots=YEARS.map(([y,col])=>{const c=el('circle',{r:5,fill:'none',stroke:col,'stroke-width':2,visibility:'hidden'});svg.appendChild(c);return c});
@@ -1257,4 +1304,29 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
  document.addEventListener('methodchange',()=>{hero();if(shade==='res')setLegend()});
  draw();
 })();
-</script></body></html>
+</script><script>
+(function(){   // ui_round15.py: jump links beside the Ballots cast box, map layout on laptops, snapshot bar, Voters percentages
+ const $=id=>document.getElementById(id);
+ // jump links: top of the right-hand column when the top is two columns wide, under the title otherwise
+ const two=matchMedia('(min-width:761px)'),wide=matchMedia('(min-width:1100px)');
+ function placeNav(){const nav=document.querySelector('nav.jump'),h1=document.querySelector('h1.title'),hr=document.querySelector('.heroR');if(!nav||!h1||!hr)return;
+  if(two.matches){if(nav.parentNode!==hr)hr.prepend(nav)}else if(nav.previousElementSibling!==h1)h1.after(nav)}
+ // laptop: summary, key and boundary note beside the map, above the details panel
+ const sm=$('summary'),lg=document.querySelector('.mapcol .legend, .popcol .legend'),ln=$('layernote'),pc=document.querySelector('.popcol'),mc=document.querySelector('.mapcol'),sb=document.querySelector('.snapbar');
+ function placeMap(){if(!sm||!pc||!mc)return;
+  if(wide.matches){pc.prepend(sm);if(lg)sm.after(lg);if(ln&&lg)lg.after(ln)}
+  else{if(sb)sb.after(sm);if(lg)mc.append(lg);if(ln)mc.append(ln)}}
+ function place(){placeNav();placeMap()}
+ two.addEventListener('change',place);wide.addEventListener('change',place);place();addEventListener('load',()=>setTimeout(place,0));
+ // snapshot bar: first and last dates at the ends; "LATEST" on the newest day
+ const s0=$('snap0'),s1=$('snap1'),sd=$('snapd'),sl=$('snap'),lat=$('snaplat');
+ if(s0&&typeof DATES!=='undefined'){s0.textContent=DATES[0];s1.textContent=DATES[DATES.length-1]}
+ function latest(){if(lat&&sl)lat.hidden=+sl.value!==+sl.max}
+ if(sd)new MutationObserver(latest).observe(sd,{childList:true,characterData:true,subtree:true});if(sl)sl.addEventListener('input',latest);latest();
+ // Voters tables: percentages in small italics
+ const dm=document.querySelector('.demos');
+ function pcts(){if(!dm)return;dm.querySelectorAll('td,p.note').forEach(e=>{if(e.querySelector('i.pc,button'))return;const m=e.textContent.match(/^(.*\S) \((<?\d+%)\)$/);if(m){e.textContent=m[1]+' ';const i=document.createElement('i');i.className='pc';i.textContent='('+m[2]+')';e.appendChild(i)}})}
+ if(dm){let busy=false;new MutationObserver(()=>{if(busy)return;busy=true;pcts();busy=false}).observe(dm,{childList:true,subtree:true});pcts()}
+})();
+</script><!-- ui_round16 -->
+</body></html>
