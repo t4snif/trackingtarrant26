@@ -442,6 +442,12 @@ section.panel>h2.sh:first-of-type{margin-top:32px}
 .pop table.blv{margin:0 0 4px}
 .pop table.blv td:first-child{padding-left:16px;color:var(--muted)}
 .pop table.blv td:last-child{font-weight:700}
+
+/* ui_round21.py: no section numbers; Pace views */
+h2.sh>.n{display:none}
+.pvoff,#hyears.pvoff{display:none!important}
+.ctlgrid.pday{grid-template-columns:minmax(0,380px)}
+#trknote.pvnote{margin-top:8px}
 </style></head><body><main>
 <!--HERO-->
 <header class="mast"><span class="upd" id="upd" data-at="2026-10-19T20:18:03-05:00">MAIL BALLOT TOTALS MADE 10.19, 8:18:03 PM CT</span></header>
@@ -499,7 +505,7 @@ section.panel>h2.sh:first-of-type{margin-top:32px}
  <div class="lbl">TURNOUT SO FAR</div>
  <p class="tsub" id="tnote"></p>
  <div class="tbar" id="tbar" role="img" aria-label="Ballots so far as a share of registered voters, with past final turnout marked"></div><div class="tscale" id="tscale" aria-hidden="true"></div>
- <div class="row" id="hmode" role="group" aria-label="Voting method"><button data-m="mail" aria-pressed="true">Mail ballots received</button><button data-m="inperson" aria-pressed="false">Early in person</button></div>
+ <div class="row" id="hmode" role="group" aria-label="Voting method"><button data-m="all" aria-pressed="false">All methods</button><button data-m="mail" aria-pressed="true">Mail ballots received</button><button data-m="inperson" aria-pressed="false">Early in person</button></div>
  <div class="ctlrow"><div class="row" id="hscale" role="group" aria-label="Scale"><button data-s="cum" aria-pressed="true">Cumulative</button><button data-s="day" aria-pressed="false">Daily</button></div><div class="row" id="hrange" role="group" aria-label="Time range"><button data-r="sofar" aria-pressed="true">So far</button><button data-r="all" aria-pressed="false">Whole period</button></div></div>
  <div class="row" id="hyears" role="group" aria-label="Years shown" style="margin-top:6px"><button data-y="2026" aria-pressed="true"><i style="color:#3b2418"></i>2026</button><button data-y="2024" aria-pressed="false"><i style="color:#d17a00"></i>2024</button><button data-y="2022" aria-pressed="true"><i style="color:#8a8a8a;border-top-style:dashed"></i>2022</button><button data-y="2020" aria-pressed="false"><i style="color:#8a6a52"></i>2020</button><button data-y="2018" aria-pressed="true"><i style="color:#8f7556;border-top-style:dashed"></i>2018</button></div>
  <div class="hchart" id="hchart"><svg id="hsvg" role="img" aria-label="Turnout by days before Election Day, 2018 to 2026"></svg><div class="htip" id="htip" hidden></div></div>
@@ -921,7 +927,9 @@ const YEARS=[['2018','#8f7556','6 4',1.6,2.1],['2020','#8a6a52','',1.5,2.0],['20
 const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const cmp=v=>v>=10000?(v/1000).toFixed(1)+'k':v.toLocaleString();
 const fmtD=iso=>MON.at(+iso.slice(5,7)-1)+' '+(+iso.slice(8));
-let mode=HIST.inperson['2026'].length?'inperson':'mail', scale='cum', range='sofar';const on=new Set(['2026','2022','2018']);
+HIST.all={};Object.keys(HIST.mail).forEach(y=>{const M=new Map();[...(HIST.mail[y]||[]),...(HIST.inperson[y]||[])].forEach(([d,iso,v])=>{const o=M.get(d)||[d,iso,0];o[2]+=v;M.set(d,o)});HIST.all[y]=[...M.values()]});   // ui_round21
+const MODE=()=>({M:'mail',E:'inperson'})[window.MF]||'all';
+let mode=MODE(), scale='cum', range='sofar';const on=new Set(['2026','2022','2018']);
 const svg=document.getElementById('hsvg'),tip=document.getElementById('htip'),box=document.getElementById('hchart'),NS='http://www.w3.org/2000/svg';
 function series(m,sc,y){const r=HIST[m][y].filter(p=>p[0]>=0).slice().sort((a,b)=>b[0]-a[0]);let c=0;return r.map(p=>{c+=p[2];return {d:p[0],date:p[1],v:sc==='cum'?c:p[2]}})}
 function cumAt(m,y,d){return HIST[m][y].filter(p=>p[0]>=d).reduce((t,p)=>t+p[2],0)}
@@ -937,7 +945,7 @@ function draw(){
  const ymax=Math.max(...S.flat().map(p=>p.v),1),[top,ticks]=nice(ymax);
  const X=d=>m.l+(dmax-d)/(dmax-dmin)*(W-m.l-m.r),Y=v=>H-m.b-v/top*(H-m.t-m.b);
  const fs=W<520?10.5:11.5;
- svg.appendChild(el('text',{x:m.l,y:20,'font-size':W<520?12.5:14,'font-weight':'bold',fill:'#3b2418'},(mode==='mail'?'Mail ballots received':'Early in-person voters')+(scale==='cum'?', cumulative':', per day')));
+ svg.appendChild(el('text',{x:m.l,y:20,'font-size':W<520?12.5:14,'font-weight':'bold',fill:'#3b2418'},({mail:'Mail ballots received',inperson:'Early in-person voters',all:'Ballots cast, mail and early in person'})[mode]+(scale==='cum'?', cumulative':', per day')));
  const g=el('g',{});svg.appendChild(g);
  ticks.forEach(t=>{g.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:Y(t),y2:Y(t),stroke:'#e3d9c8','stroke-dasharray':'3 3'}));g.appendChild(el('text',{x:m.l-6,y:Y(t)+fs/3,'text-anchor':'end','font-size':fs,fill:'#6b4a35'},t>=1000?(t/1000).toLocaleString()+'k':t.toLocaleString()))});
  const step=mode==='inperson'?1:(dmax-dmin>24?5:dmax-dmin>10?2:1);for(let d=dmin;d<=dmax;d+=(mode==='inperson'?1:1)){if(mode==='mail'&&d%step)continue;if(mode==='inperson'&&W<520&&d%2)continue;g.appendChild(el('line',{x1:X(d),x2:X(d),y1:m.t,y2:H-m.b,stroke:'#efe7da'}));g.appendChild(el('text',{x:X(d),y:H-m.b+fs+5,'text-anchor':'middle','font-size':fs,fill:'#6b4a35'},d===0?'Elec. Day':String(d)))}
@@ -971,6 +979,7 @@ function wire(id,attr,set){document.querySelectorAll('#'+id+' button').forEach(b
 wire('hmode','m',v=>mode=v);wire('hscale','s',v=>scale=v);wire('hrange','r',v=>range=v);
 document.querySelectorAll('#hyears button').forEach(b=>b.onclick=()=>{const y=b.dataset.y;on.has(y)?on.delete(y):on.add(y);if(!on.size)on.add('2026');document.querySelectorAll('#hyears button').forEach(x=>x.setAttribute('aria-pressed',String(on.has(x.dataset.y))));draw()});
 document.querySelectorAll('#hmode button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.m===mode)));
+document.addEventListener('methodchange',()=>{const b=document.querySelector('#hmode button[data-m="'+MODE()+'"]');if(b&&b.getAttribute('aria-pressed')!=='true')b.click()});
 let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(draw,120)});draw();
 })();
 </script><script>
@@ -1473,5 +1482,23 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
   const where={fw:' in Fort Worth council districts',arl:' in Arlington council districts 1–5',gp:' in Grand Prairie council districts'}[layer]||'';
   sm.innerHTML='<b>'+fmt(tot)+'</b> '+(WORD[window.MF]||'ballots cast')+where+(snap?' (+'+fmt(nw)+' that day)':'')+', in '+reg+' of '+all+' '+unit+'.'+(k<0?'':h.slice(k))};
  draw();
+})();
+</script><script>
+(function(){   // ui_round21: Daily returns joins Pace as its "2026 day by day" view
+ const $=id=>document.getElementById(id),grid=document.querySelector('.ctlgrid'),dc=$('dchart'),tn=$('trknote'),hn=$('hnote'),hc=$('hchart'),hy=$('hyears');
+ if(!grid||!dc||!hn||!hc)return;
+ const labs=[...grid.querySelectorAll('label')],ml=labs.find(l=>l.textContent.trim().startsWith('METHOD'));
+ // VIEW menu in place of METHOD (the method now follows the tab)
+ const vl=document.createElement('label');vl.textContent='VIEW';const vs=document.createElement('select');vs.className='sel sm';vs.id='paceview';vs.setAttribute('aria-label','Pace view');
+ vs.innerHTML='<option value="cmp">Compared with past years</option><option value="day">2026 day by day</option>';vl.appendChild(vs);
+ if(ml){ml.before(vl);ml.classList.add('pvoff')}else grid.prepend(vl);
+ // the daily bars and their note move under the year chart; the Daily returns heading and jump link go
+ hn.after(dc);if(tn){dc.after(tn);tn.hidden=false;tn.classList.remove('infonote');tn.classList.add('pvnote')}
+ const dh=[...document.querySelectorAll('h2.sh')].find(h=>h.textContent.includes('Daily returns'));if(dh)dh.remove();
+ const ja=[...document.querySelectorAll('nav.jump a')].find(a=>a.textContent.trim()==='Daily returns');if(ja)ja.remove();
+ const yl=grid.nextElementSibling&&grid.nextElementSibling.classList.contains('lbl')?grid.nextElementSibling:null;
+ const cmpEls=()=>[...labs.filter(l=>l!==ml),yl,hy,hc,hn].filter(Boolean),dayEls=()=>[dc,tn].filter(Boolean);
+ function apply(){const day=vs.value==='day';grid.classList.toggle('pday',day);cmpEls().forEach(e=>e.classList.toggle('pvoff',day));dayEls().forEach(e=>e.classList.toggle('pvoff',!day));dispatchEvent(new Event('resize'))}
+ vs.onchange=apply;apply();
 })();
 </script></body></html>
