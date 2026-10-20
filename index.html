@@ -4,7 +4,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Figtree:ital,wght@0,400;0,500;0,700;0,800;1,400;1,700&amp;family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..800,0..100;1,9..144,300..800,0..100&amp;display=swap">
 <style>
-:root{--bg:#fffbef;--ink:#3b2418;--muted:#6b4a35;--line:#d8ccb9;--panel:#f2efe5;--tan:#8a6a52;--box:#f2efe5;--boxe:#8a6a52;--tab:#fffbef;--nodata:#ece5d8;--edge:#cfc2ae;--edge2:#8a6a52;--mapbg:#fffbef;
+:root{--bg:#fffbef;--ink:#3b2418;--muted:#6b4a35;--line:#d8ccb9;--panel:#f2efe5;--tan:#8a6a52;--box:#f2efe5;--boxe:#8a6a52;--tab:#fffbef;--nodata:#d9d9d9;--edge:#cfc2ae;--edge2:#8a6a52;--mapbg:#fffbef;
 --red:#d40000;--blue:#3d6f8e;--pred:#ff0000;--slate:#7aa8c3;
 --serif:"Fraunces",Georgia,"Times New Roman",serif;--sans:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;--num:"Calistoga",Georgia,serif;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -75,7 +75,7 @@ table.demo{border-collapse:collapse;width:100%;font-size:.88rem}table.demo td{pa
 .pop table.age tr.h td{font-weight:400;color:var(--muted);font-size:.7rem}
 .pop .meta{color:var(--muted);margin-top:5px;border-top:1px solid var(--tan);padding-top:4px}
 .legend{font-size:.8rem;color:var(--muted);margin-top:10px}
-.ramp{height:12px;border-radius:3px;background:linear-gradient(90deg,#173f63,#2f6690,#6f9bbd,#b8b0a2,#e08a7d,#c0392b,#8b1a1a);margin:5px 0 3px;border:1px solid var(--line)}
+.ramp{height:12px;border-radius:3px;background:linear-gradient(90deg,#173f63,#2f6690,#6f9bbd,#ffffff,#e08a7d,#c0392b,#8b1a1a);margin:5px 0 3px;border:1px solid var(--line)}
 .ends{display:flex;justify-content:space-between;color:var(--ink);font-weight:800}
 .hl{display:flex;align-items:center;gap:8px;margin-top:7px}
 .hs{width:30px;height:12px;flex:0 0 30px;border:1px solid var(--line);border-radius:2px;background:repeating-linear-gradient(135deg,var(--ink) 0 1.4px,transparent 1.4px 5px);opacity:.6}
@@ -149,7 +149,7 @@ h2 button.info{vertical-align:.25em}
 :root[data-theme="dark"] .big{color:var(--slate)}
 
 /* ui_v4: map stays light in dark mode */
-.mapwrap{--mapbg:#fffbef;--ink:#3b2418;--muted:#6b4a35;--line:#d8ccb9;--bg:#fffbef;--tab:#fffbef;--nodata:#ece5d8;--edge:#cfc2ae;--edge2:#8a6a52;--red:#d40000;--blue:#3d6f8e;color:#3b2418}
+.mapwrap{--mapbg:#fffbef;--ink:#3b2418;--muted:#6b4a35;--line:#d8ccb9;--bg:#fffbef;--tab:#fffbef;--nodata:#d9d9d9;--edge:#cfc2ae;--edge2:#8a6a52;--red:#d40000;--blue:#3d6f8e;color:#3b2418}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .mapwrap{border-color:#a58a73}}
 :root[data-theme="dark"] .mapwrap{border-color:#a58a73}
 .hs{background:repeating-linear-gradient(135deg,rgba(59,36,24,.65) 0 1.4px,#fffbef 1.4px 5px);opacity:1}
@@ -419,13 +419,16 @@ section.panel>h2.sh:first-of-type{margin-top:32px}
 .demos{margin-bottom:-18px}
 .demos i.pc{font-style:italic;font-size:.86em;color:var(--muted);margin-left:1px}
 .demos .note i.pc{font-size:1em}
+
+/* ui_round17 */
+.bym{margin-top:8px}.bym table{width:100%}.bym td:nth-child(2){text-align:right;padding-right:10px}.bym td:last-child{text-align:right;color:var(--muted)}
 </style></head><body><main>
 <!--HERO-->
 <header class="mast"><span class="upd" id="upd" data-at="2026-10-19T20:18:03-05:00">MAIL BALLOT TOTALS MADE 10.19, 8:18:03 PM CT</span></header>
 <h1 class="title">Tracking the Early Vote in Tarrant County</h1>
 <div class="hero">
 <div class="heroL"><div class="lab">BALLOTS CAST</div><div class="big" style="--em:3.50">62,345</div><div class="bigsub">ballots so far</div><div><span class="badge lg">+51,657 ON OCT. 19</span></div><p class="mailnote">Mail counts rarely update on Sundays and postal holidays.</p><p class="cta">Want to be a part of this number? <a href="#plan" class="planlink">Plan your vote<span aria-hidden="true"> →</span></a></p></div>
-<div class="heroR"><p class="disc">Not endorsed by any candidate or campaign. Not a political advertisement. Early estimates, not results. On election night the county’s results take their place as they come in, and these estimates and the daily snapshots stay on the map to compare; see <a href="#how" class="howlink">How this works</a>.</p><div class="cards"><div class="card"><b>62,024</b><span>NAMED VOTERS <span class="sep" aria-hidden="true">✦</span> <span class="pctn">99% OF BALLOTS</span></span><i><em class="d">29,505 D history</em> <span class="sep" aria-hidden="true">✦</span> <em class="r">18,931 R history</em> <span class="sep" aria-hidden="true">✦</span> <em class="m">896 split evenly</em> <span class="sep" aria-hidden="true">✦</span> <em class="x">12,692 no party history</em><small class="cnt">The other 320 ballots are redacted.</small></i></div><div class="card"><b class="d">D+20</b><span>ESTIMATED LEAD</span><i>Estimated share: <em class="d">D 60%</em> <span class="sep" aria-hidden="true">✦</span> <em class="r">R 40%</em><br>Range: <em class="d">D 48–69%</em> <span class="sep" aria-hidden="true">✦</span> <em class="r">R 31–52%</em></i></div></div></div>
+<div class="heroR"><p class="disc">Not endorsed by any candidate or campaign. Not a political advertisement. Early estimates, not results. On election night the county’s results take their place as they come in, and these estimates and the daily snapshots stay on the map to compare; see <a href="#how" class="howlink">How this works</a>.</p><div class="cards"><div class="card"><b>62,024</b><span>NAMED VOTERS <span class="sep" aria-hidden="true">✦</span> <span class="pctn">99% OF BALLOTS</span></span><i><em class="d">29,505 D history</em> <span class="sep" aria-hidden="true">✦</span> <em class="r">18,931 R history</em> <span class="sep" aria-hidden="true">✦</span> <em class="m">896 split evenly</em> <span class="sep" aria-hidden="true">✦</span> <em class="x">12,692 no party history</em> <span class="sep" aria-hidden="true">✦</span> <em class="rd">320 redacted</em></i></div><div class="card"><b class="d">D+20</b><span>ESTIMATED LEAD</span><i>Estimated share: <em class="d">D 60%</em> <span class="sep" aria-hidden="true">✦</span> <em class="r">R 40%</em><br>Range: <em class="d">D 48–69%</em> <span class="sep" aria-hidden="true">✦</span> <em class="r">R 31–52%</em></i></div></div></div>
 </div>
 <script type="application/json" id="figs">{"est": 0.5984, "lo": 0.4804, "hi": 0.6892, "dp": 60, "dlo": 48, "dhi": 69, "show_est": false, "age65_regular_mail": "10842 of 11249", "age65_sent_electronically": "61 of 284", "ctot": 62345, "mtot": 11936, "evtot": 50409, "evna": false, "listed": 11935, "evlisted": 50409, "daily": [["9/24", 2, 0, 0], ["9/25", 4, 0, 0], ["9/28", 22, 0, 0], ["9/29", 18, 0, 0], ["9/30", 14, 0, 0], ["10/1", 22, 0, 0], ["10/2", 24, 0, 0], ["10/3", 23, 0, 0], ["10/5", 37, 0, 0], ["10/6", 94, 0, 0], ["10/7", 212, 0, 0], ["10/8", 605, 0, 0], ["10/9", 1122, 0, 0], ["10/13", 2377, 0, 0], ["10/14", 1384, 0, 0], ["10/15", 1850, 0, 0], ["10/16", 1714, 0, 0], ["10/17", 1164, 0, 0], ["10/19", 1248, 50409, 0]], "report_time": "2026-10-19T20:15:10", "fpca": 469, "regmail": 11467, "abs_through": "10/19"}</script>
 <!--/HERO-->
@@ -463,7 +466,7 @@ section.panel>h2.sh:first-of-type{margin-top:32px}
   </div>
  <div class="legend">
   <div class="lbl" id="lgkey">KEY</div>
-  <div id="lgtxt">Shading: average lean of identified voters (primary history). Unshaded: no ballots yet, or none identified.</div>
+  <div id="lgtxt">Shading: average lean of identified voters (primary history). Gray: no ballots yet, or none identified.</div>
   <div class="ramp" id="lgramp"></div><div class="ends" id="lgends"><span>Strong D</span><span>Even</span><span>Strong R</span></div>
   <div class="hl" id="lghl"><span class="hs"></span><span>Lines: more than half of the ballots here have no party history</span></div>
  </div>
@@ -550,7 +553,7 @@ const DARKM=false;   // the map keeps its light colors in dark mode (10/10)
 const CATS=[['Ds','Strong D','#173f63',-3],['Dm','Mid D','#2f6690',-2],['Dw','Weak D','#6f9bbd',-1],['mix','Mixed primary record','#b8b0a2',0],['Rw','Weak R','#e08a7d',1],['Rm','Mid R','#c0392b',2],['Rs','Strong R','#8b1a1a',3]];
 if(DARKM)['#9fd0f5','#5f9fd1','#3f6f95','#6e655b','#9c4a3f','#e0584b','#ff9a8c'].forEach((c,i)=>CATS[i][2]=c);   // dark mode: stronger = brighter
 const SCORE=Object.fromEntries(CATS.map(c=>[c[0],c[3]]));
-const stops=CATS.map(c=>[c[3],[1,3,5].map(k=>parseInt(c[2].slice(k,k+2),16))]);   // from CATS, so the map, legend and details panel share one set
+const stops=CATS.map(c=>[c[3],[1,3,5].map(k=>parseInt(c[2].slice(k,k+2),16))]);stops[3][1]=[255,255,255];   // ui_round17: white at even   // from CATS, so the map, legend and details panel share one set
 function leanColor(v){for(let i=0;i<stops.length-1;i++){const[a,ca]=stops[i],[b,cb]=stops[i+1];if(v>=a&&v<=b){const t=(v-a)/(b-a);return 'rgb('+ca.map((c,k)=>Math.round(c+(cb[k]-c)*t)).join(',')+')'}}return '#ccc'}
 function leanName(v){if(v===null)return 'none identified';const a=Math.abs(v),s=v<0?'D':'R';return a<.5?'about even':a<1.5?'weak '+s:a<2.5?'mid '+s:'strong '+s}
 const svg=document.getElementById('map'),base=document.getElementById('base'),hg=document.getElementById('hatchg'),lg=document.getElementById('labels'),pop=document.getElementById('pop'),wrap=document.getElementById('wrap');
@@ -739,7 +742,7 @@ function turnColor(v){const TRS=TR();v=Math.max(0,Math.min(1,v/TMAX));for(let i=
 function setTmax(){const v=[];Object.keys(GEO[layer]).forEach(id=>{const r=regN(id);if(r>=100)v.push(((agg[id]||{}).n||0)/r)});v.sort((a,b)=>a-b);const q=v.length?v[Math.floor(.95*(v.length-1))]:0;TMAX=[.0005,.001,.002,.005,.01,.02,.05,.1,.2,.3,.4,.5,.6,.7,.8,.9,1].find(x=>x>=q)||1}
 function turnRow(id,o){const r=regN(id);return r?'<tr><td>Turnout <span style="font-weight:400">(registered)</span></td><td>'+pctf(o.n/r)+' <span style="font-weight:400">of '+r.toLocaleString()+'</span></td></tr>':''}
 function turnSummary(){if(shade!=='turn')return '';let n=0,r=0;Object.keys(GEO[layer]).forEach(id=>{r+=regN(id);n+=((agg[id]||{}).n||0)});return '<br><b>Turnout:</b> '+S(n)+' ballots from '+r.toLocaleString()+' registered voters in these '+(layer==='pct'?'precincts':'areas')+' ('+pctf(r?n/r:0)+').'}
-const RBS=[[-.8,[24,58,82]],[-.6,[44,86,114]],[-.4,[61,111,142]],[-.2,[122,168,195]],[-.05,[203,221,232]],[0,[244,239,230]],[.05,[247,214,207]],[.2,[236,134,118]],[.4,[212,0,0]],[.6,[160,0,0]],[.8,[100,0,0]]];
+const RBS=[[-.8,[24,58,82]],[-.6,[44,86,114]],[-.4,[61,111,142]],[-.2,[122,168,195]],[-.05,[203,221,232]],[0,[255,255,255]],[.05,[247,214,207]],[.2,[236,134,118]],[.4,[212,0,0]],[.6,[160,0,0]],[.8,[100,0,0]]];
 function rbColor(v){v=Math.max(-.8,Math.min(.8,v));for(let i=0;i<RBS.length-1;i++){const[a,ca]=RBS[i],[b,cb]=RBS[i+1];if(v>=a&&v<=b){const t=(v-a)/(b-a);return 'rgb('+ca.map((c,k)=>Math.round(c+(cb[k]-c)*t)).join(',')+')'}}return '#ccc'}
 const EST={city:1,fw:1,arl:1,gp:1,isd:1};
 function presSh(id){const v=(PRES24[layer]||{})[id];return v&&v[0]+v[1]>=20?v[0]/(v[0]+v[1]):null}
@@ -773,8 +776,8 @@ function setLegend(){
  document.getElementById('shexp').textContent=SHEXP[shade];
  const grad='linear-gradient(90deg,'+RBS.map(([v,c])=>'rgb('+c.join(',')+') '+Math.round((v+.8)/1.6*100)+'%').join(',')+')';
  r.style.display='';e.className='ends';hl.style.display=(shade==='ret'||shade==='diff')?'':'none';
- if(shade==='ret'){r.style.background='linear-gradient(90deg,'+stops.map(([v,c],i)=>'rgb('+c.join(',')+') '+Math.round(i/(stops.length-1)*100)+'%').join(',')+')';t.textContent='Average party history of the voters returning ballots (scored strong, mid or weak by how many primaries of one party they chose). Unshaded: no ballots yet, fewer than 5, or none with a party history.';e.innerHTML='<span>Strong D</span><span>Even</span><span>Strong R</span>'}
- else if(shade==='turn'){t.textContent='Ballots returned as a share of registered voters (county voter file, Oct. 2026, active and suspense). The scale tops out at '+pctf(TMAX)+' for now. Unshaded: fewer than 25 registered voters, or 1 to 4 ballots.';r.style.background='linear-gradient(90deg,'+TR().map(([v,c])=>'rgb('+c.join(',')+') '+Math.round(v*100)+'%').join(',')+')';e.innerHTML='<span>0%</span><span>'+pctf(TMAX/2)+'</span><span>'+pctf(TMAX)+'+</span>'}
+ if(shade==='ret'){r.style.background='linear-gradient(90deg,'+stops.map(([v,c],i)=>'rgb('+c.join(',')+') '+Math.round(i/(stops.length-1)*100)+'%').join(',')+')';t.textContent='Average party history of the voters returning ballots (scored strong, mid or weak by how many primaries of one party they chose). Gray: no ballots yet, fewer than 5, or none with a party history.';e.innerHTML='<span>Strong D</span><span>Even</span><span>Strong R</span>'}
+ else if(shade==='turn'){t.textContent='Ballots returned as a share of registered voters (county voter file, Oct. 2026, active and suspense). The scale tops out at '+pctf(TMAX)+' for now. Gray: fewer than 25 registered voters, or 1 to 4 ballots.';r.style.background='linear-gradient(90deg,'+TR().map(([v,c])=>'rgb('+c.join(',')+') '+Math.round(v*100)+'%').join(',')+')';e.innerHTML='<span>0%</span><span>'+pctf(TMAX/2)+'</span><span>'+pctf(TMAX)+'+</span>'}
  else if(shade==='prim'){t.textContent='March 2026 primary margin: Democratic minus Republican share of the primary ballots cast in the area. Gray: no primary ballots.'+(EST[layer]?' This boundary set cuts through precincts, so its figures are estimates.':'');r.style.background=grad;e.innerHTML='<span>D+80</span><span>Even</span><span>R+80</span>'}
  else if(shade==='d24'){t.textContent="Arrow length: the gap between the Democratic share of returning voters with a party history and the area's 2024 Harris share of the two-party vote; full length at 30 points or more. 2024 results are moved from that year's precincts to today's by where their voters are registered now.";r.style.display='none';e.className='arrowkey';e.innerHTML='<span class="d">\u2190 more Democratic than 2024</span><span class="r">more Republican \u2192</span>'}
  else{t.textContent="Arrow length: the gap between the Democratic share of returning voters with a party history and the area's March 2026 primary Democratic share; full length at 30 points or more.";r.style.display='none';e.className='arrowkey';e.innerHTML='<span class="d">← more Democratic than the primary</span><span class="r">more Republican →</span>'}}
@@ -1329,4 +1332,17 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
  if(dm){let busy=false;new MutationObserver(()=>{if(busy)return;busy=true;pcts();busy=false}).observe(dm,{childList:true,subtree:true});pcts()}
 })();
 </script><!-- ui_round16 -->
-</body></html>
+<script>
+(function(){   // ui_round17: details panel ballot label by tab, and a By method table on All methods
+ if(typeof ballotsBody!=='function')return;
+ const _bb=ballotsBody,fmt=x=>(typeof S==='function'?S(x):x.toLocaleString());
+ const LAB={M:'Mail ballots received',E:'Early in-person votes',D:'Election Day votes'};
+ ballotsBody=function(c){let h=_bb(c);h=h.replace('<b>Ballots received</b>','<b>'+(LAB[window.MF]||'Ballots cast')+'</b>');
+  if(window.MF||!c||!c.o)return h;
+  const ids=new Set(c.ids||[c.id]),T={};
+  (window.B_ALL||B).forEach(b=>{if(b[2]>snap)return;const r=regionOf(b[1],layer,b[4],b);if(r==null||!ids.has(r))return;const w=b.length>12?b[12]:1,t=T[b[3]]=T[b[3]]||{n:0,D:0,R:0};t.n+=w;if(b[0][0]==='D')t.D+=w;else if(b[0][0]==='R')t.R+=w});
+  const rows=[['M','Mail'],['E','Early in person'],['D','Election Day']].filter(([k])=>T[k]&&T[k].n);
+  if(!rows.length)return h;
+  return h+'<div class="bym"><div class="agehd">By method</div><table class="age">'+rows.map(([k,l])=>'<tr><td>'+l+'</td><td>'+fmt(T[k].n)+'</td><td><span class="d">'+fmt(T[k].D)+' D</span> <span class="sep" aria-hidden="true">✦</span> <span class="r">'+fmt(T[k].R)+' R</span> history</td></tr>').join('')+'</table></div>'};
+})();
+</script></body></html>
