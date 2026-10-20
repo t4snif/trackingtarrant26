@@ -953,22 +953,22 @@ document.querySelectorAll('#hmode button').forEach(x=>x.setAttribute('aria-press
 let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(draw,120)});draw();
 })();
 </script><script>
-(function(){   // turnout bar (ui_v4)
+function drawTurnout(){   // turnout bar (ui_v4; ui_round18: follows the tab)
  const box=document.getElementById('tbar'),note=document.getElementById('tnote'),sc=document.getElementById('tscale');if(!box)return;
  const F=JSON.parse(document.getElementById('figs').textContent);
- const R=REGCTY[0],n={};B.forEach(b=>{n[b[3]]=(n[b[3]]||0)+b[12]});const tot=F.ctot||BN(),share=tot/R;
- let x=0,h='';[['M','Mail','var(--slate)'],['E','Early in person','var(--blue)'],['D','Election Day','var(--ink)']].forEach(([k,l,c])=>{const DS=(F.daily||[]).reduce((a,r)=>{a.M+=r[1]||0;a.E+=r[2]||0;a.D+=r[3]||0;return a},{M:0,E:0,D:0}),v=DS.M+DS.E+DS.D?DS[k]:(k==='M'?(n.M||0)+(tot-BN()):(n[k]||0));n[k]=v;if(!v)return;const w=100*v/R;h+='<i style="left:'+x+'%;width:max(3px,'+w+'%);background:'+c+'" title="'+l+': '+v.toLocaleString()+'"></i>';x+=w});
- const marks=Object.entries(VRHIST).filter(([y,[vr,to]])=>y==='2018'||y==='2022'||share>to/vr).sort((a,b)=>a[1][1]/a[1][0]-b[1][1]/b[1][0]);
- const labs=[[100,'100%','end1'],[Math.min(100,100*share),'2026 so far: '+pctf(share),'now']];if(share>.08)labs.push([0,'0%','end0']);
+ const R=REGCTY[0],n={};B.forEach(b=>{n[b[3]]=(n[b[3]]||0)+b[12]});const tot=F.ctot||BN(),share=tot/R;const MFT=window.MF,shareT=MFT?(({M:F.mtot,E:F.evtot,D:F.edtot}[MFT])||0)/R:share;
+ let x=0,h='';[['M','Mail','var(--slate)'],['E','Early in person','var(--blue)'],['D','Election Day','var(--ink)']].forEach(([k,l,c])=>{if(MFT&&k!==MFT){n[k]=0;return}const DS=(F.daily||[]).reduce((a,r)=>{a.M+=r[1]||0;a.E+=r[2]||0;a.D+=r[3]||0;return a},{M:0,E:0,D:0}),v=DS.M+DS.E+DS.D?DS[k]:(k==='M'?(n.M||0)+(tot-BN()):(n[k]||0));n[k]=v;if(!v)return;const w=100*v/R;h+='<i style="left:'+x+'%;width:max(3px,'+w+'%);background:'+c+'" title="'+l+': '+v.toLocaleString()+'"></i>';x+=w});
+ const marks=Object.entries(VRHIST).filter(([y,[vr,to]])=>y==='2018'||y==='2022'||shareT>to/vr).sort((a,b)=>a[1][1]/a[1][0]-b[1][1]/b[1][0]);
+ const labs=[[100,'100%','end1'],[Math.min(100,100*shareT),'2026 so far: '+pctf(shareT),'now']];if(shareT>.08)labs.push([0,'0%','end0']);
  marks.forEach(([y,[vr,to]])=>{const p=100*to/vr;h+='<b style="left:'+p+'%"></b>';labs.push([p,y+' final: '+Math.round(p)+'%','past'])});
  box.innerHTML=h;sc.innerHTML=labs.map(([p,txt,c])=>'<em class="'+c+'" data-p="'+p+'">'+txt+'</em>').join('');
  const place=()=>{const W=sc.clientWidth,rows=[];let mx=0;[...sc.children].sort((x,y)=>(+x.dataset.p)-(+y.dataset.p)).forEach(e=>{const w=e.offsetWidth,c=W*e.dataset.p/100;
    const l=e.classList.contains('end0')?0:e.classList.contains('end1')?W-w:Math.max(0,Math.min(W-w,c-w/2));let r=0;while(rows[r]!==undefined&&rows[r]>l-12)r++;rows[r]=l+w;mx=Math.max(mx,r);
    e.style.left=l+'px';e.style.top=(r*17)+'px';e.style.transform='none';e.style.textAlign='left'});sc.style.height=(17*(mx+1)+4)+'px'};
  place();addEventListener('resize',place);   // labels centered on their marks; collisions drop a line (ui_round9.py)
- box.setAttribute('aria-label',pctf(share)+' of registered voters so far; final turnout '+marks.map(([y,[vr,to]])=>y+' '+Math.round(100*to/vr)+'%').join(', '));
- note.innerHTML='<b>'+pctf(share)+'</b> of '+R.toLocaleString()+' registered voters'+([n.M,n.E,n.D].filter(x=>x>0).length>1?' <span class="tkey">'+[['M','Mail','var(--slate)'],['E','Early in person','var(--blue)'],['D','Election Day','var(--ink)']].filter(([k])=>n[k]>0).map(([k,l,c])=>'<span><i style="background:'+c+'"></i>'+l+'</span>').join('')+'</span>':'')
-})();
+ box.setAttribute('aria-label',pctf(shareT)+' of registered voters so far; final turnout '+marks.map(([y,[vr,to]])=>y+' '+Math.round(100*to/vr)+'%').join(', '));
+ note.innerHTML='<b>'+pctf(shareT)+'</b> of '+R.toLocaleString()+' registered voters'+([n.M,n.E,n.D].filter(x=>x>0).length>1?' <span class="tkey">'+[['M','Mail','var(--slate)'],['E','Early in person','var(--blue)'],['D','Election Day','var(--ink)']].filter(([k])=>n[k]>0).map(([k,l,c])=>'<span><i style="background:'+c+'"></i>'+l+'</span>').join('')+'</span>':'')
+}drawTurnout();document.addEventListener('methodchange',()=>setTimeout(drawTurnout,0));
 </script><script>
 (function(){
  const box=document.getElementById('dchart');if(!box)return;
@@ -1344,5 +1344,35 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
   const rows=[['M','Mail'],['E','Early in person'],['D','Election Day']].filter(([k])=>T[k]&&T[k].n);
   if(!rows.length)return h;
   return h+'<div class="bym"><div class="agehd">By method</div><table class="age">'+rows.map(([k,l])=>'<tr><td>'+l+'</td><td>'+fmt(T[k].n)+'</td><td><span class="d">'+fmt(T[k].D)+' D</span> <span class="sep" aria-hidden="true">✦</span> <span class="r">'+fmt(T[k].R)+' R</span> history</td></tr>').join('')+'</table></div>'};
+})();
+</script><script>
+(function(){   // ui_round18: the top section follows the method tab
+ const hL=document.querySelector('.heroL'),cards=document.querySelector('.heroR .cards');if(!hL||!cards)return;
+ const L0=hL.innerHTML,C0=cards.innerHTML,F=JSON.parse(document.getElementById('figs').textContent);
+ const fmt=x=>(typeof S==='function'?S(x):x.toLocaleString()),SEP=' <span class="sep" aria-hidden="true">✦</span> ';
+ const MON=['JAN.','FEB.','MARCH','APRIL','MAY','JUNE','JULY','AUG.','SEPT.','OCT.','NOV.','DEC.'];
+ const T={M:['MAIL BALLOTS','mail ballots so far',1,'mtot'],E:['EARLY IN-PERSON VOTES','early votes so far',2,'evtot'],D:['ELECTION DAY VOTES','Election Day votes so far',3,'edtot']};
+ function results(){try{const R=JSON.parse((document.getElementById('resultsdata')||{}).textContent||'null');return !!(R&&R.races&&R.races.length)}catch(e){return false}}
+ function draw(){
+  if(results())return;
+  const mf=window.MF;if(!mf||!T[mf]){hL.innerHTML=L0;cards.innerHTML=C0;return}
+  const [lab,sub,col,key]=T[mf],tot=F[key]||0;
+  const day=(F.daily||[]).filter(r=>r[col]>0).pop();
+  const em=String(tot.toLocaleString()).split('').reduce((a,ch)=>a+(ch===','?.3:.64),0).toFixed(2);
+  hL.innerHTML='<div class="lab">'+lab+'</div><div class="big" style="--em:'+em+'">'+tot.toLocaleString()+'</div><div class="bigsub">'+sub+'</div>'
+   +(day?'<div><span class="badge lg">+'+day[col].toLocaleString()+' ON '+MON[+day[0].split('/')[0]-1]+' '+day[0].split('/')[1]+'</span></div>':'')
+   +(mf==='M'?'<p class="mailnote">Mail counts rarely update on Sundays and postal holidays.</p>':'')
+   +'<p class="cta">Want to be a part of this number? <a href="#plan" class="planlink">Plan your vote<span aria-hidden="true"> →</span></a></p>';
+  // the method's own rows (B holds only this tab's rows); public rows carry a count in b[12]
+  let n=0,red=0,D=0,R=0,M=0,U=0,uP=0;
+  B.forEach(b=>{const w=b.length>12?b[12]:1,c=b[0];n+=w;if(c==='red')red+=w;if(c==='mix')M+=w;else if(c[0]==='D')D+=w;else if(c[0]==='R')R+=w;if(c==='red'||c==='gen'||c==='nomatch'){U+=w;uP+=w*PRIOR(b[1])}});
+  if(!n){cards.innerHTML='<div class="card"><span>'+lab+'</span><i>None listed yet. The county posts '+(mf==='D'?'the Election Day roster after the polls close on Nov. 3':'its roster each day')+'.</i></div>';return}
+  const named=n-red,nh=named-D-R-M,k=D+.5*M,est=(k+uP)/n,lo=k/n,hi=(k+U)/n,Dp=Math.round(est*100),ld=2*Dp-100,Dlo=Math.round(lo*100),Dhi=Math.round(hi*100);
+  const lead=ld>0?'<b class="d">D+'+ld+'</b>':ld<0?'<b class="r">R+'+(-ld)+'</b>':'<b>Even</b>';
+  const who={M:'MAIL',E:'EARLY',D:'ELECTION DAY'}[mf];
+  cards.innerHTML='<div class="card"><b>'+fmt(named)+'</b><span>NAMED '+who+' VOTERS'+SEP+'<span class="pctn">'+Math.round(100*named/n)+'% OF '+who+' BALLOTS</span></span><i><em class="d">'+fmt(D)+' D history</em>'+SEP+'<em class="r">'+fmt(R)+' R history</em>'+SEP+'<em class="m">'+fmt(M)+' split evenly</em>'+SEP+'<em class="x">'+fmt(nh)+' no party history</em>'+SEP+'<em class="rd">'+fmt(red)+' redacted</em></i></div>'
+   +'<div class="card">'+lead+'<span>ESTIMATED LEAD, '+who+' '+(mf==='M'?'BALLOTS':'VOTES')+'</span><i>Estimated share: <em class="d">D '+Dp+'%</em>'+SEP+'<em class="r">R '+(100-Dp)+'%</em><br>Range: <em class="d">D '+Dlo+'–'+Dhi+'%</em>'+SEP+'<em class="r">R '+(100-Dhi)+'–'+(100-Dlo)+'%</em></i></div>';
+ }
+ document.addEventListener('methodchange',()=>setTimeout(draw,0));
 })();
 </script></body></html>
