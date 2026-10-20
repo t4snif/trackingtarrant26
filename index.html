@@ -422,6 +422,11 @@ section.panel>h2.sh:first-of-type{margin-top:32px}
 
 /* ui_round17 */
 .bym{margin-top:8px}.bym table{width:100%}.bym td:nth-child(2){text-align:right;padding-right:10px}.bym td:last-child{text-align:right;color:var(--muted)}
+
+/* ui_round19 */
+.viewrow{display:flex;align-items:center;gap:12px;margin:0 0 14px}.viewrow .lbl{margin:0}.viewrow select{width:auto;min-width:220px}
+.viewrow[hidden],.sitebox[hidden],section.panel.gone{display:none!important}
+.sitebox .siterow{margin-top:6px}
 </style></head><body><main>
 <!--HERO-->
 <header class="mast"><span class="upd" id="upd" data-at="2026-10-19T20:18:03-05:00">MAIL BALLOT TOTALS MADE 10.19, 8:18:03 PM CT</span></header>
@@ -444,6 +449,7 @@ section.panel>h2.sh:first-of-type{margin-top:32px}
 <section class="panel" data-p="eday" hidden><h2 class="sh"><span class="n">06</span>Election Day vote centers</h2><p class="tsub" id="vcsum"></p><p class="note">On Nov. 3, vote at any of these vote centers from 7 a.m. to 7 p.m. Dots grow with the votes cast at each one once the county posts its Election Day counts; tap one to compare it with the same building in 2022 and 2024.</p><div class="siterow"><div class="mapwrap sitewrap"><svg class="sitemap" id="vcmap" viewBox="0 0 1000 1011.9" role="group" aria-label="Election Day vote centers on a map of Tarrant County"><g class="pbase"></g><g class="dots"></g></svg></div><div class="pop dpanel sitepanel" id="vcpop" aria-live="polite"><div class="hint">Tap or hover a site to see its details here.</div></div></div></section>
 <section class="panel" data-p="all mail early eday"><p class="mfnote" id="mfnote" hidden></p>
  <h2 class="sh"><span class="n">01</span>Map</h2>
+ <div class="viewrow" id="viewrow" hidden><label class="lbl" for="viewsel">VIEW</label><select id="viewsel" class="sel"><option value="pct">Precinct returns</option><option value="sites">Polling places</option></select></div><div class="sitebox" id="sitebox" hidden></div>
  <div class="mapctl"><div class="cg"><div class="lbl">BOUNDARIES</div>
  <select id="laysel" class="sel" aria-label="Boundaries"></select>
  <div class="row" id="msrow"><button id="mstog" aria-pressed="false">Select several precincts</button></div>
@@ -1374,5 +1380,20 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
    +'<div class="card">'+lead+'<span>ESTIMATED LEAD, '+who+' '+(mf==='M'?'BALLOTS':'VOTES')+'</span><i>Estimated share: <em class="d">D '+Dp+'%</em>'+SEP+'<em class="r">R '+(100-Dp)+'%</em><br>Range: <em class="d">D '+Dlo+'–'+Dhi+'%</em>'+SEP+'<em class="r">R '+(100-Dhi)+'–'+(100-Dlo)+'%</em></i></div>';
  }
  document.addEventListener('methodchange',()=>setTimeout(draw,0));
+})();
+</script><script>
+(function(){   // ui_round19: polling places inside the Map section, switched by the VIEW menu
+ const vr=document.getElementById('viewrow'),vs=document.getElementById('viewsel'),box=document.getElementById('sitebox');if(!vr||!vs||!box)return;
+ const map=box.closest('section.panel'),parts={};
+ [['E','early'],['D','eday']].forEach(([k,p])=>{const sec=document.querySelector('section.panel[data-p="'+p+'"]');if(!sec)return;
+  const d=document.createElement('div');d.dataset.st=k;[...sec.children].forEach(c=>{if(!c.matches('h2.sh'))d.appendChild(c)});box.appendChild(d);parts[k]=d;sec.classList.add('gone')});
+ const pctEls=()=>[map.querySelector('.mapctl'),map.querySelector('.snapbar'),document.getElementById('summary'),map.querySelector('.maprow')].filter(Boolean);
+ function apply(){const mf=window.MF,can=(mf==='E'||mf==='D')&&parts[mf];vr.hidden=!can;if(!can)vs.value='pct';const sites=vs.value==='sites'&&can;
+  pctEls().forEach(e=>e.style.display=sites?'none':'');box.hidden=!sites;Object.entries(parts).forEach(([k,d])=>d.hidden=k!==mf);
+  if(sites)dispatchEvent(new Event('resize'))}
+ vs.addEventListener('change',apply);document.addEventListener('methodchange',()=>setTimeout(apply,0));apply();
+ // the "Polling places" jump link: open the tab, then this view
+ document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('nav.jump a');if(!a||a.textContent!=='Polling places')return;
+  setTimeout(()=>{if(vr.hidden)return;vs.value='sites';apply();const h=map.querySelector('h2.sh');if(h)h.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})},120)},true);
 })();
 </script></body></html>
