@@ -488,6 +488,16 @@ a.imore{color:var(--ink);font-weight:700;text-decoration:underline;text-underlin
 .viewbtns button+button{border-left:1.5px solid var(--ink)}
 .viewbtns button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 .viewbtns button:focus-visible{outline:3px solid var(--blue);outline-offset:-3px}
+
+/* ui_round27.py: one color per map, rank numbers, hours list */
+.sitemap circle.k-ev{fill:#c3b1e8}.sitemap circle.k-vc{fill:#b5d1ae}
+.sitekey i.k-ev{background:#c3b1e8}.sitekey i.k-vc{background:#b5d1ae}
+.sitemap .ranks text{pointer-events:none;text-anchor:middle;dominant-baseline:central;font-family:var(--sans);font-weight:800;fill:#3b2418;paint-order:stroke;stroke:#fffbef;stroke-width:3px}
+.sitepanel ul.hrs{list-style:none;margin:2px 0 6px;padding:0}.sitepanel ul.hrs li{padding:1px 0}
+
+/* ui_round28.py: strength bars right-aligned beside the counts */
+.pop table.blv td.bbar{width:26%;padding:0 8px 0 0}
+.pop table.blv td.bbar span{margin-left:auto}
 </style></head><body><main>
 <!--HERO-->
 <header class="mast"><span class="upd" id="upd" data-at="2026-10-20T19:25:06-05:00">MAIL BALLOT REPORT MADE 10.20, 7:25:06 PM CT</span></header>
@@ -1156,13 +1166,13 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
   const ranked=L.filter(x=>x.n>0).sort((a,b)=>b.n-a.n),rank=x=>1+ranked.filter(y=>y.n>x.n).length;
   const dayTot=days.map((_,i)=>L.reduce((a,x)=>a+((C[x.id]||[])[i]||0),0));
   // circle area matches the count, from zero; the smallest keep a visible minimum
-  const R=x=>has?Math.max(2.5,36*Math.sqrt(x.n/mx)):8,kind=x=>x.both?'both':key,kname={ev:'Early voting site',vc:'Election Day vote center',both:'Early voting site and Election Day vote center'};
+  const R=x=>has?Math.max(2.5,36*Math.sqrt(x.n/mx)):8,kind=x=>key,kname={ev:'Early voting site',vc:'Election Day vote center',both:'Early voting site and Election Day vote center'};
   L.slice().sort((a,b)=>b.n-a.n).forEach(x=>{const c=document.createElementNS(NS,'circle');c.setAttribute('cx',x.x);c.setAttribute('cy',x.y);c.setAttribute('r',R(x));c.setAttribute('class','k-'+kind(x));c.dataset.id=x.id;c.setAttribute('tabindex','0');c.setAttribute('role','button');
-   c.setAttribute('aria-label',x.name+', '+x.city+'. '+kname[kind(x)]+(has?'. '+x.n.toLocaleString()+' ballots, '+ord(rank(x))+' of '+L.length:''));
+   c.setAttribute('aria-label',x.name+', '+x.city+(has?'. '+x.n.toLocaleString()+' ballots, '+ord(rank(x))+' of '+L.length:''));
    const t=document.createElementNS(NS,'title');t.textContent=x.name+(has?': '+x.n.toLocaleString()+' ballots':'');c.appendChild(t);dots.appendChild(c)});
   // key under the map
   const wrap=svg.closest('.mapwrap');if(wrap&&!wrap.nextElementSibling?.classList.contains('sitekey')){const kk=document.createElement('div');kk.className='sitekey';
-   kk.innerHTML='<span><i class="k-'+key+'"></i>'+kname[key]+'</span><span><i class="k-both"></i>Also '+(key==='ev'?'an Election Day vote center':'an early voting site')+' (dark ring)</span><span>Circle area shows ballots cast; circles may overlap.</span>';wrap.after(kk)}
+   kk.innerHTML='<span><i class="k-'+key+'"></i>'+(has?'Circle area shows ballots cast; circles may overlap. 1, 2 and 3 mark the busiest.':'Every '+(key==='ev'?'early voting site':'vote center')+'. Circles grow with the votes cast once the county posts its counts.')+'</span>';wrap.after(kk)}
   const sum=document.getElementById(key+'sum');
   const same=y=>{const M=L.filter(x=>x.past&&x.past[y]);return M.length?SEP+'at the '+M.length+' also used in '+y+': '+Math.round(100*M.reduce((a,x)=>a+x.n,0)/M.reduce((a,x)=>a+x.past[y],0))+'% of '+y+'’s Election Day':''};   // same buildings only
   sum.innerHTML=(key==='vc'&&has)?'<b>'+all.toLocaleString()+'</b> Election Day votes at '+L.filter(x=>x.n>0).length+' of '+L.length+' vote centers'+same('2022'):has?'<b>'+all.toLocaleString()+'</b> ballots at '+L.filter(x=>x.n>0).length+' of '+L.length+' '+(key==='ev'?'early voting sites':'vote centers')+(days.length?' through '+days[days.length-1]:''):'<b>'+L.length+'</b> '+(key==='ev'?'early voting sites':'vote centers');
@@ -1171,13 +1181,13 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
    const top=Math.max(1,...arr,...yrs.flatMap(y=>pd[y].slice(0,n)));const bw=Math.min(36,(W-m.l-m.r)/n),X=i=>m.l+i*bw,Y=v=>H-m.b-v/top*(H-m.t-m.b);
    let g='<svg class="sbars" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Ballots each day at this site'+(yrs.length?', with the same day of early voting in '+yrs.join(', '):'')+'">';
    [0,top].forEach(v=>{g+='<line x1="'+m.l+'" x2="'+(W-m.r)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#e3d9c8"/><text x="'+(m.l-4)+'" y="'+(Y(v)+3)+'" text-anchor="end" font-size="9" fill="#6b4a35">'+(v>=1000?(v/1000).toFixed(1)+'k':v)+'</text>'});
-   arr.forEach((v,i)=>{g+='<rect x="'+(X(i)+bw*.15)+'" y="'+Y(v)+'" width="'+bw*.7+'" height="'+(H-m.b-Y(v))+'" fill="'+FILL[kind(x)]+'" stroke="#3b2418" stroke-opacity=".5"/>';if(n<=14)g+='<text x="'+(X(i)+bw/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="9" fill="#6b4a35">'+days[i]+'</text>'});
+   arr.forEach((v,i)=>{g+='<rect x="'+(X(i)+bw*.15)+'" y="'+Y(v)+'" width="'+bw*.7+'" height="'+(H-m.b-Y(v))+'" fill="'+FILL[kind(x)]+'" stroke="#3b2418" stroke-opacity=".5"/>';if(n<=7||(n-1-i)%2===0)g+='<text x="'+(X(i)+bw/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="9" fill="#6b4a35">'+days[i]+'</text>'});
    yrs.forEach(y=>{const p=pd[y].slice(0,n).map((v,i)=>(i?'L':'M')+(X(i)+bw/2).toFixed(1)+' '+Y(v).toFixed(1)).join('');g+='<path d="'+p+'" fill="none" stroke="'+YC[y]+'" stroke-width="2"'+(y==='2022'||y==='2018'?' stroke-dasharray="4 3"':'')+'/>';pd[y].slice(0,n).forEach((v,i)=>{g+='<circle cx="'+(X(i)+bw/2)+'" cy="'+Y(v)+'" r="2.4" fill="'+YC[y]+'"/>'})});
    return g+'</svg><div class="skey"><span><b style="background:'+FILL[kind(x)]+'"></b>2026</span>'+yrs.map(y=>'<span><i style="color:'+YC[y]+'"></i>'+y+', same day of early voting</span>').join('')+'</div>'}
   const show=x=>{dots.querySelectorAll('.on').forEach(e=>e.classList.remove('on'));const c=dots.querySelector('[data-id="'+x.id+'"]');if(c){c.classList.add('on');dots.appendChild(c)}
    const pa=x.past||{},yrs=Object.keys(pa).sort().reverse(),arr=C[x.id]||[],k=arr.length;
    let h='<div class="ph"><div><h3>'+x.name+'</h3><div class="sub">'+(x.room?x.room+', ':'')+x.address+', '+x.city+' '+x.zip+'</div></div></div>';
-   h+='<div class="sub">'+kname[kind(x)]+SEP+HRS[key]+(x.both?SEP+HRS[other[key]]:'')+'</div>';
+   
    if(has&&x.n){h+=(key==='vc'?'<div class="lead"><b class="n">'+x.n.toLocaleString()+'</b>Election Day votes</div>':'<div class="lead"><b class="n">'+x.n.toLocaleString()+'</b>ballots so far'+(x.nl?' <span class="badge">+'+x.nl.toLocaleString()+' on '+days[days.length-1]+'</span>':'')+'</div>')
      +'<div class="rank">'+ord(rank(x))+' of '+L.length+' '+(key==='ev'?'early voting sites':'vote centers')+' in ballots'+SEP+(100*x.n/all).toFixed(1)+'% of the county’s '+(key==='ev'?'early votes':'Election Day votes')+' here</div>'}
    else if(has)h+='<div class="sub">No ballots reported here yet.</div>';
@@ -1190,8 +1200,11 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
     if(samey.length)h+='<div class="agehd">Change from past years, through day '+k+'</div><table>'+samey.map(y=>{const v=pd[y].slice(0,k).reduce((a,b)=>a+b,0),d=v?Math.round(100*(x.n-v)/v):null;return '<tr><td>'+y+': '+v.toLocaleString()+'</td><td>'+(d===null?'–':(d>0?'+':'')+d+'%')+'</td></tr>'}).join('')+'</table>'}
    if(key==='ev')h+=yrs.length?'<div class="agehd">Final early vote at this site</div><table>'+yrs.map(y=>'<tr><td>'+y+'</td><td>'+pa[y].toLocaleString()+'</td></tr>').join('')+'</table>':'<div class="sub">Not an early voting site in 2018–2024 under this name, so there’s no comparison.</div>';
    else h+=yrs.length?'<div class="agehd">Election Day votes at this site</div><table>'+(has?'<tr><td>2026</td><td>'+x.n.toLocaleString()+'</td></tr>':'')+yrs.map(y=>'<tr><td>'+y+'</td><td>'+pa[y].toLocaleString()+(has&&pa[y]?' <span class="sub">('+((x.n-pa[y])>=0?'+':'')+Math.round(100*(x.n-pa[y])/pa[y])+'%)</span>':'')+'</td></tr>').join('')+'</table>':'<div class="sub">Not a vote center in 2022 or 2024 under this name, so there’s no comparison.</div>';
+   h+='<div class="agehd">Hours</div><ul class="hrs">'+HRS[key].split(' ✦ ').map(t=>'<li>'+t+'</li>').join('')+'</ul>';
    if(x.approx)h+='<div class="meta">Map location is approximate for now.</div>';
    pop.innerHTML=h};
+  // ui_round27: 1, 2, 3 inside the three busiest circles (drawn above the dots, not tappable themselves)
+  if(has){const g=document.createElementNS(NS,'g');g.setAttribute('class','ranks');g.setAttribute('aria-hidden','true');ranked.slice(0,3).forEach((x,i)=>{const t=document.createElementNS(NS,'text');t.setAttribute('x',x.x);t.setAttribute('y',x.y);t.textContent=String(i+1);t.style.fontSize=Math.max(11,R(x)*.9)+'px';g.appendChild(t)});svg.appendChild(g)}
   dots.addEventListener('pointerover',e=>{const id=e.target.dataset&&e.target.dataset.id;if(id&&e.pointerType==='mouse')show(L.find(x=>x.id===id))});
   dots.addEventListener('click',e=>{const id=e.target.dataset&&e.target.dataset.id;if(id)show(L.find(x=>x.id===id))});
   dots.addEventListener('keydown',e=>{const id=e.target.dataset&&e.target.dataset.id;if(id&&(e.key==='Enter'||e.key===' ')){e.preventDefault();show(L.find(x=>x.id===id))}});   // keyboard: Tab to a site, Enter to open it
@@ -1588,5 +1601,17 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
  vs.after(g);const lb=document.querySelector('label[for="viewsel"]');if(lb){lb.removeAttribute('for');lb.id='viewlbl';g.setAttribute('aria-labelledby','viewlbl')}
  function sync(){g.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===vs.value)))}
  document.addEventListener('methodchange',()=>setTimeout(sync,10));document.addEventListener('click',()=>setTimeout(sync,200),true);sync();
+})();
+</script><script>
+(function(){   // ui_round27: site notes behind (i); Election Day tab shows the vote center map while it has no votes
+ ['ev','vc'].forEach(k=>{const sm=document.getElementById(k+'sum'),n=sm&&sm.nextElementSibling;if(!n||!n.matches('p.note'))return;
+  n.id=k+'note';n.hidden=true;n.classList.add('infonote');const b=document.createElement('button');b.type='button';b.className='info';b.textContent='i';
+  b.setAttribute('aria-label','About this map');b.setAttribute('aria-expanded','false');b.setAttribute('aria-controls',n.id);
+  b.onclick=()=>{const o=n.hidden;n.hidden=!o;b.setAttribute('aria-expanded',String(o))};sm.appendChild(b)});
+ const vs=document.getElementById('viewsel'),vr=document.getElementById('viewrow'),box=document.getElementById('sitebox');if(!vs||!vr||!box)return;
+ const sec=box.closest('section.panel'),top=e=>{while(e&&e.parentElement!==sec)e=e.parentElement;return e};
+ function edEmpty(){if(window.MF!=='D'||B[0])return;const h=sec.querySelector(':scope>h2.sh');[h,top(vr),top(box)].forEach(e=>e&&e.classList.remove('mfhide'));
+  if(vs.value!=='sites'){vs.value='sites';vs.dispatchEvent(new Event('change'))}document.querySelectorAll('.viewbtns button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v==='sites')))}
+ document.addEventListener('methodchange',()=>setTimeout(edEmpty,30));
 })();
 </script></body></html>
