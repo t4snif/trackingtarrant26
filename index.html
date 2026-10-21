@@ -501,6 +501,13 @@ a.imore{color:var(--ink);font-weight:700;text-decoration:underline;text-underlin
 
 /* ui_round29.py: version stamp */
 .verfoot{display:flex;flex-wrap:wrap;gap:4px 8px;justify-content:center;align-items:center;margin:28px 0 18px;padding-top:12px;border-top:1px solid var(--line);font:500 .74rem/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--muted)}
+
+/* ui_round30.py: one fixed bar column; counts aligned */
+.pop table.blv{table-layout:fixed;width:100%}
+.pop table.blv td.bbar{width:24%;padding:0 10px 0 0}
+.pop table.blv td:nth-child(3){width:2.8em;padding:1px 0}
+.pop table.blv td.bp{width:3.2em;padding:1px 0}
+.pop .brow .bn,.pop details.brow>summary span.bn{width:2.8em;text-align:right;flex:0 0 auto}
 </style></head><body><main>
 <!--HERO-->
 <header class="mast"><span class="upd" id="upd" data-at="2026-10-20T19:25:06-05:00">MAIL BALLOT REPORT MADE 10.20, 7:25:06 PM CT</span></header>
@@ -1617,7 +1624,7 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
   if(vs.value!=='sites'){vs.value='sites';vs.dispatchEvent(new Event('change'))}document.querySelectorAll('.viewbtns button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v==='sites')))}
  document.addEventListener('methodchange',()=>setTimeout(edEmpty,30));
 })();
-</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.8.0</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-10-20 19:25 CT</span><!--/VER--></footer>
+</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.8.1</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-10-20 19:25 CT</span><!--/VER--></footer>
 <script>(function(){   // ui_round29: the stamp goes at the end of the page's main column
  const f=document.getElementById('verfoot'),w=document.querySelector('.wrap');if(f&&w)w.appendChild(f)})();</script>
 </body></html>
