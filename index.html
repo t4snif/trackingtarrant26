@@ -508,6 +508,10 @@ a.imore{color:var(--ink);font-weight:700;text-decoration:underline;text-underlin
 .pop table.blv td:nth-child(3){width:2.8em;padding:1px 0}
 .pop table.blv td.bp{width:3.2em;padding:1px 0}
 .pop .brow .bn,.pop details.brow>summary span.bn{width:2.8em;text-align:right;flex:0 0 auto}
+
+/* ui_round32.py: year toggles stay on one row when they fit and wrap when the text is large, never overflowing */
+#hyears{display:flex!important;flex-wrap:wrap;gap:6px}
+#hyears button{flex:1 1 0;min-width:max-content;padding:7px 6px}
 </style></head><body><main>
 <!--HERO-->
 <header class="mast"><span class="upd" id="upd" data-at="2026-10-20T19:25:06-05:00">MAIL BALLOT REPORT MADE 10.20, 7:25:06 PM CT</span></header>
@@ -1626,7 +1630,7 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
   if(vs.value!=='sites'){vs.value='sites';vs.dispatchEvent(new Event('change'))}document.querySelectorAll('.viewbtns button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v==='sites')))}
  document.addEventListener('methodchange',()=>setTimeout(edEmpty,30));
 })();
-</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.9.0</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-10-20 19:25 CT</span><!--/VER--></footer>
+</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.9.1</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-10-20 19:25 CT</span><!--/VER--></footer>
 <script>(function(){   // ui_round29: the stamp goes at the end of the page's main column
  const f=document.getElementById('verfoot'),w=document.querySelector('.wrap');if(f&&w)w.appendChild(f)})();</script>
 </body></html>
