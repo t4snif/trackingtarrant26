@@ -1004,7 +1004,8 @@ function draw(){
  svg.setAttribute('viewBox','0 0 '+W+' '+H);svg.innerHTML='';
  const S=YEARS.map(([y])=>on.has(y)?series(mode,scale,y):[]);
  const allD=S.flat().map(p=>p.d);let dmax=mode==='inperson'?Math.max(15,...allD):Math.min(45,Math.max(...allD,20)),dmin=mode==='inperson'?4:0;
- const n26=series(mode,scale,'2026');if(range==='sofar'&&n26.length){dmax=Math.min(dmax,Math.max(...n26.map(p=>p.d))+1);dmin=Math.max(dmin,Math.min(...n26.map(p=>p.d))-1)}if(range==='20'){dmax=Math.min(dmax,20);if(n26.length)dmin=Math.max(dmin,Math.min(...n26.map(p=>p.d))-1)}   // ui_round31
+ const n26=series(mode,scale,'2026');if(range==='sofar'&&n26.length){dmax=Math.min(dmax,Math.max(...n26.map(p=>p.d))+1);dmin=Math.max(dmin,Math.min(...n26.map(p=>p.d))-1)}if(mode==='all')dmax=Math.min(dmax,20);   // ui_round33: All methods starts 20 days out
+ if(range==='20'){dmax=Math.min(dmax,20);if(n26.length)dmin=Math.max(dmin,Math.min(...n26.map(p=>p.d))-1)}   // ui_round31
  S.forEach((a,i)=>S[i]=a.filter(p=>p.d<=dmax&&p.d>=dmin));
  const ymax=Math.max(...S.flat().map(p=>p.v),1),[top,ticks]=nice(ymax);
  const X=d=>m.l+(dmax-d)/(dmax-dmin)*(W-m.l-m.r),Y=v=>H-m.b-v/top*(H-m.t-m.b);
@@ -1630,7 +1631,14 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
   if(vs.value!=='sites'){vs.value='sites';vs.dispatchEvent(new Event('change'))}document.querySelectorAll('.viewbtns button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v==='sites')))}
  document.addEventListener('methodchange',()=>setTimeout(edEmpty,30));
 })();
-</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.9.1</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-10-20 19:25 CT</span><!--/VER--></footer>
+</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.9.2</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-10-20 19:25 CT</span><!--/VER--></footer>
 <script>(function(){   // ui_round29: the stamp goes at the end of the page's main column
  const f=document.getElementById('verfoot'),w=document.querySelector('.wrap');if(f&&w)w.appendChild(f)})();</script>
-</body></html>
+<script>
+(function(){   // ui_round33: "From 20 days out" only on the Mail tab
+ function apply(){const mail=window.MF==='M',b=document.querySelector('#hrange button[data-r="20"]'),o=document.querySelector('.ctlgrid select[aria-label="Time range"] option[value="20"]');
+  if(o){o.hidden=!mail;o.disabled=!mail}
+  if(!mail&&b&&b.getAttribute('aria-pressed')==='true'){const so=document.querySelector('#hrange button[data-r="sofar"]');if(so)so.click()}}
+ document.addEventListener('methodchange',()=>setTimeout(apply,0));apply();
+})();
+</script></body></html>
