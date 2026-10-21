@@ -458,6 +458,28 @@ a.imore{color:var(--ink);font-weight:700;text-decoration:underline;text-underlin
 .pop table.blv td:nth-child(2){text-align:right;font-weight:700}
 .pop table.blv td.bp{width:3.2em;font-style:italic;font-size:.86em;color:var(--muted);font-weight:400}
 .card i i.pc{font-style:italic;font-size:.86em;font-weight:400;color:var(--muted)}
+
+/* ui_round25.py: polling places */
+.sitemap circle{fill-opacity:.82;stroke:#3b2418;stroke-opacity:.55;stroke-width:1;vector-effect:non-scaling-stroke}
+.sitemap circle.k-ev{fill:#b8a3e3}.sitemap circle.k-vc{fill:#a3c49f}.sitemap circle.k-both{fill:#f3e06b;stroke-opacity:.9;stroke-width:2.2}
+.sitemap circle.on{fill-opacity:1;stroke:#3b2418;stroke-opacity:1;stroke-width:3}
+.sitekey{display:flex;flex-wrap:wrap;gap:6px 16px;margin:8px 0 2px;font-size:.8rem;color:var(--muted);align-items:center}
+.sitekey span{display:inline-flex;align-items:center;gap:6px}
+.sitekey i{display:inline-block;width:12px;height:12px;border-radius:50%;border:1px solid rgba(59,36,24,.55)}
+.sitekey i.k-ev{background:#b8a3e3}.sitekey i.k-vc{background:#a3c49f}.sitekey i.k-both{background:#f3e06b;border:2px solid #3b2418}
+.sitepanel .rank{margin:2px 0 8px;color:var(--muted)}
+.sitepanel .sday td:nth-child(2),.sitepanel .sday td:nth-child(3){text-align:right}
+.sitepanel .sday td:nth-child(3){font-style:italic;font-size:.86em;color:var(--muted);font-weight:400}
+.sitepanel .sday tr.h td{font-weight:400;color:var(--muted);font-size:.7rem}
+.sitepanel svg.sbars{display:block;width:100%;max-width:380px;height:auto;margin:4px 0 2px}
+.sitepanel .skey{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.74rem;color:var(--muted)}
+.sitepanel .skey i{display:inline-block;width:14px;height:0;border-top:2.5px solid;margin-right:4px;vertical-align:middle}
+.sitepanel .skey b{display:inline-block;width:10px;height:10px;margin-right:4px;vertical-align:-1px}
+
+.pop table.blv td.bbar{width:40%;padding:0 10px 0 8px;vertical-align:middle}
+.pop table.blv td.bbar span{display:block;height:4px;border-radius:2px;opacity:.85}
+.pop table.blv td:nth-child(2){text-align:left;font-weight:400}
+.pop table.blv td:nth-child(3){text-align:right;font-weight:700}
 </style></head><body><main>
 <!--HERO-->
 <header class="mast"><span class="upd" id="upd" data-at="2026-10-20T19:25:06-05:00">MAIL BALLOT REPORT MADE 10.20, 7:25:06 PM CT</span></header>
@@ -1106,9 +1128,15 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
  d.addEventListener('close',()=>{document.body.classList.remove('dlg-open');if(back)back.focus()});
  mark()})();
 </script><script>
-(function(){   // add_sites.py
+(function(){   // ui_round25 (was add_sites.py): polling place maps and panels
  const D=JSON.parse(document.getElementById('sitesdata').textContent),NS='http://www.w3.org/2000/svg';
  const HRS={ev:'Oct. 19–23: 8 a.m.–5 p.m. ✦ Oct. 24: 7 a.m.–7 p.m. ✦ Oct. 25: 10 a.m.–4 p.m. ✦ Oct. 26–30: 7 a.m.–7 p.m.',vc:'Nov. 3: 7 a.m.–7 p.m.'};
+ const SEP=' <span class="sep" aria-hidden="true">✦</span> ',YC={'2018':'#8f7556','2022':'#8a8a8a','2024':'#d17a00'},FILL={ev:'#b8a3e3',vc:'#a3c49f',both:'#f3e06b'};
+ const ord=n=>n+(n%100>=11&&n%100<=13?'th':['th','st','nd','rd'][n%10]||'th');
+ // the same building on both lists: by name, or by street number + street + ZIP
+ const nm=x=>x.name.toLowerCase().replace(/[^a-z0-9]/g,''),ad=x=>{const m=x.address.toLowerCase().match(/(\d+)\s+(?:[nsew]\.?\s+|north\s+|south\s+|east\s+|west\s+)?([a-z0-9]+)/);return m?m[1]+m[2].slice(0,4)+x.zip:''};
+ const other={ev:'vc',vc:'ev'},KEYS={};['ev','vc'].forEach(k=>{KEYS[k]=new Set();(D[k]||[]).forEach(x=>{KEYS[k].add('n'+nm(x));const q=ad(x);if(q)KEYS[k].add('a'+q)})});
+ const isBoth=(k,x)=>KEYS[other[k]].has('n'+nm(x))||(ad(x)&&KEYS[other[k]].has('a'+ad(x)));
  const cty=document.querySelector('#ctyg path'),pd=Object.values(GEO.pct).join('');
  ['ev','vc'].forEach(key=>{
   const svg=document.getElementById(key+'map');if(!svg)return;
@@ -1116,25 +1144,44 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
   const p=document.createElementNS(NS,'path');p.setAttribute('d',pd);base.appendChild(p);
   if(cty){const c=document.createElementNS(NS,'path');c.setAttribute('d',cty.getAttribute('d'));c.setAttribute('class','cty');base.appendChild(c)}
   const tot=id=>(C[id]||[]).reduce((a,b)=>a+b,0),last=id=>{const a=C[id]||[];return a.length?a[a.length-1]:0};
-  const L=D[key].map(x=>Object.assign({n:tot(x.id),nl:last(x.id)},x)),has=L.some(x=>x.n>0),mx=Math.max(1,...L.map(x=>x.n)),all=L.reduce((a,x)=>a+x.n,0);
-  const R=x=>has?5+21*Math.sqrt(x.n/mx):8;
-  L.slice().sort((a,b)=>b.n-a.n).forEach(x=>{const c=document.createElementNS(NS,'circle');c.setAttribute('cx',x.x);c.setAttribute('cy',x.y);c.setAttribute('r',R(x));c.dataset.id=x.id;c.setAttribute('tabindex','0');c.setAttribute('role','button');c.setAttribute('aria-label',x.name+', '+x.city+(has?', '+x.n.toLocaleString()+' ballots':''));
+  const L=D[key].map(x=>Object.assign({n:tot(x.id),nl:last(x.id),both:isBoth(key,x)},x)),has=L.some(x=>x.n>0),mx=Math.max(1,...L.map(x=>x.n)),all=L.reduce((a,x)=>a+x.n,0);
+  const ranked=L.filter(x=>x.n>0).sort((a,b)=>b.n-a.n),rank=x=>1+ranked.filter(y=>y.n>x.n).length;
+  const dayTot=days.map((_,i)=>L.reduce((a,x)=>a+((C[x.id]||[])[i]||0),0));
+  // circle area matches the count, from zero; the smallest keep a visible minimum
+  const R=x=>has?Math.max(2.5,36*Math.sqrt(x.n/mx)):8,kind=x=>x.both?'both':key,kname={ev:'Early voting site',vc:'Election Day vote center',both:'Early voting site and Election Day vote center'};
+  L.slice().sort((a,b)=>b.n-a.n).forEach(x=>{const c=document.createElementNS(NS,'circle');c.setAttribute('cx',x.x);c.setAttribute('cy',x.y);c.setAttribute('r',R(x));c.setAttribute('class','k-'+kind(x));c.dataset.id=x.id;c.setAttribute('tabindex','0');c.setAttribute('role','button');
+   c.setAttribute('aria-label',x.name+', '+x.city+'. '+kname[kind(x)]+(has?'. '+x.n.toLocaleString()+' ballots, '+ord(rank(x))+' of '+L.length:''));
    const t=document.createElementNS(NS,'title');t.textContent=x.name+(has?': '+x.n.toLocaleString()+' ballots':'');c.appendChild(t);dots.appendChild(c)});
+  // key under the map
+  const wrap=svg.closest('.mapwrap');if(wrap&&!wrap.nextElementSibling?.classList.contains('sitekey')){const kk=document.createElement('div');kk.className='sitekey';
+   kk.innerHTML='<span><i class="k-'+key+'"></i>'+kname[key]+'</span><span><i class="k-both"></i>Also '+(key==='ev'?'an Election Day vote center':'an early voting site')+' (dark ring)</span><span>Circle area shows ballots cast; circles may overlap.</span>';wrap.after(kk)}
   const sum=document.getElementById(key+'sum');
-  const same=y=>{const M=L.filter(x=>x.past&&x.past[y]);return M.length?' <span class="sep" aria-hidden="true">✦</span> at the '+M.length+' also used in '+y+': '+Math.round(100*M.reduce((a,x)=>a+x.n,0)/M.reduce((a,x)=>a+x.past[y],0))+'% of '+y+'’s Election Day':''};   // same buildings only
+  const same=y=>{const M=L.filter(x=>x.past&&x.past[y]);return M.length?SEP+'at the '+M.length+' also used in '+y+': '+Math.round(100*M.reduce((a,x)=>a+x.n,0)/M.reduce((a,x)=>a+x.past[y],0))+'% of '+y+'’s Election Day':''};   // same buildings only
   sum.innerHTML=(key==='vc'&&has)?'<b>'+all.toLocaleString()+'</b> Election Day votes at '+L.filter(x=>x.n>0).length+' of '+L.length+' vote centers'+same('2022'):has?'<b>'+all.toLocaleString()+'</b> ballots at '+L.filter(x=>x.n>0).length+' of '+L.length+' '+(key==='ev'?'early voting sites':'vote centers')+(days.length?' through '+days[days.length-1]:''):'<b>'+L.length+'</b> '+(key==='ev'?'early voting sites':'vote centers');
+  // small day-by-day chart: 2026 bars, past years' same day of early voting as lines
+  function bars(x,arr,pd){const n=arr.length,yrs=Object.keys(pd).filter(y=>YC[y]).sort(),W=320,H=120,m={l:30,r:6,t:8,b:20};
+   const top=Math.max(1,...arr,...yrs.flatMap(y=>pd[y].slice(0,n)));const bw=Math.min(36,(W-m.l-m.r)/n),X=i=>m.l+i*bw,Y=v=>H-m.b-v/top*(H-m.t-m.b);
+   let g='<svg class="sbars" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Ballots each day at this site'+(yrs.length?', with the same day of early voting in '+yrs.join(', '):'')+'">';
+   [0,top].forEach(v=>{g+='<line x1="'+m.l+'" x2="'+(W-m.r)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#e3d9c8"/><text x="'+(m.l-4)+'" y="'+(Y(v)+3)+'" text-anchor="end" font-size="9" fill="#6b4a35">'+(v>=1000?(v/1000).toFixed(1)+'k':v)+'</text>'});
+   arr.forEach((v,i)=>{g+='<rect x="'+(X(i)+bw*.15)+'" y="'+Y(v)+'" width="'+bw*.7+'" height="'+(H-m.b-Y(v))+'" fill="'+FILL[kind(x)]+'" stroke="#3b2418" stroke-opacity=".5"/>';if(n<=14)g+='<text x="'+(X(i)+bw/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="9" fill="#6b4a35">'+days[i]+'</text>'});
+   yrs.forEach(y=>{const p=pd[y].slice(0,n).map((v,i)=>(i?'L':'M')+(X(i)+bw/2).toFixed(1)+' '+Y(v).toFixed(1)).join('');g+='<path d="'+p+'" fill="none" stroke="'+YC[y]+'" stroke-width="2"'+(y==='2022'||y==='2018'?' stroke-dasharray="4 3"':'')+'/>';pd[y].slice(0,n).forEach((v,i)=>{g+='<circle cx="'+(X(i)+bw/2)+'" cy="'+Y(v)+'" r="2.4" fill="'+YC[y]+'"/>'})});
+   return g+'</svg><div class="skey"><span><b style="background:'+FILL[kind(x)]+'"></b>2026</span>'+yrs.map(y=>'<span><i style="color:'+YC[y]+'"></i>'+y+', same day of early voting</span>').join('')+'</div>'}
   const show=x=>{dots.querySelectorAll('.on').forEach(e=>e.classList.remove('on'));const c=dots.querySelector('[data-id="'+x.id+'"]');if(c){c.classList.add('on');dots.appendChild(c)}
-   const pa=x.past||{},yrs=Object.keys(pa).sort().reverse();
+   const pa=x.past||{},yrs=Object.keys(pa).sort().reverse(),arr=C[x.id]||[],k=arr.length;
    let h='<div class="ph"><div><h3>'+x.name+'</h3><div class="sub">'+(x.room?x.room+', ':'')+x.address+', '+x.city+' '+x.zip+'</div></div></div>';
-   h+='<div class="sub">'+HRS[key]+'</div>';
-   if(has&&key==='vc')h+='<div class="lead"><b class="n">'+x.n.toLocaleString()+'</b>Election Day votes</div>';
-   else if(has)h+='<div class="lead"><b class="n">'+x.n.toLocaleString()+'</b>ballots so far'+(x.nl?' <span class="badge">+'+x.nl.toLocaleString()+' on '+days[days.length-1]+'</span>':'')+'</div>';
+   h+='<div class="sub">'+kname[kind(x)]+SEP+HRS[key]+(x.both?SEP+HRS[other[key]]:'')+'</div>';
+   if(has&&x.n){h+=(key==='vc'?'<div class="lead"><b class="n">'+x.n.toLocaleString()+'</b>Election Day votes</div>':'<div class="lead"><b class="n">'+x.n.toLocaleString()+'</b>ballots so far'+(x.nl?' <span class="badge">+'+x.nl.toLocaleString()+' on '+days[days.length-1]+'</span>':'')+'</div>')
+     +'<div class="rank">'+ord(rank(x))+' of '+L.length+' '+(key==='ev'?'early voting sites':'vote centers')+' in ballots'+SEP+(100*x.n/all).toFixed(1)+'% of the county’s '+(key==='ev'?'early votes':'Election Day votes')+' here</div>'}
+   else if(has)h+='<div class="sub">No ballots reported here yet.</div>';
    else h+='<div class="sub">'+(key==='ev'?'Counts start when early voting opens Oct. 19.':'Counts appear once the county posts its Election Day totals by vote center.')+'</div>';
-   const pd=x.pastd||{},k=(C[x.id]||[]).length,same=Object.keys(pd).sort().reverse().filter(y=>pd[y].length>=k);
-   if(key==='ev'&&has&&k&&same.length)h+='<div class="agehd">Through day '+k+' of early voting</div><table><tr><td>2026</td><td>'+x.n.toLocaleString()+'</td></tr>'+same.map(y=>{const v=pd[y].slice(0,k).reduce((a,b)=>a+b,0);return '<tr><td>'+y+'</td><td>'+v.toLocaleString()+(v?' <span class="sub">(2026 at '+Math.round(100*x.n/v)+'%)</span>':'')+'</td></tr>'}).join('')+'</table>';
+   const pd=x.pastd||{},samey=Object.keys(pd).sort().reverse().filter(y=>pd[y].length>=k);
+   if(key==='ev'&&has&&k){
+    const bi=arr.indexOf(Math.max(...arr));
+    h+='<div class="agehd">Each day</div>'+bars(x,arr,Object.fromEntries(samey.map(y=>[y,pd[y]])))
+     +'<table class="sday"><tr class="h"><td>Day</td><td>Ballots</td><td>Share of county</td></tr>'+arr.map((v,i)=>'<tr><td>'+days[i]+(i===bi&&k>1?' (busiest)':'')+'</td><td>'+v.toLocaleString()+'</td><td>'+(dayTot[i]?(100*v/dayTot[i]).toFixed(1)+'%':'–')+'</td></tr>').join('')+'</table>';
+    if(samey.length)h+='<div class="agehd">Change from past years, through day '+k+'</div><table>'+samey.map(y=>{const v=pd[y].slice(0,k).reduce((a,b)=>a+b,0),d=v?Math.round(100*(x.n-v)/v):null;return '<tr><td>'+y+': '+v.toLocaleString()+'</td><td>'+(d===null?'–':(d>0?'+':'')+d+'%')+'</td></tr>'}).join('')+'</table>'}
    if(key==='ev')h+=yrs.length?'<div class="agehd">Final early vote at this site</div><table>'+yrs.map(y=>'<tr><td>'+y+'</td><td>'+pa[y].toLocaleString()+'</td></tr>').join('')+'</table>':'<div class="sub">Not an early voting site in 2018–2024 under this name, so there’s no comparison.</div>';
-   else h+=yrs.length?'<div class="agehd">Election Day votes at this site</div><table>'+(has?'<tr><td>2026</td><td>'+x.n.toLocaleString()+'</td></tr>':'')+yrs.map(y=>'<tr><td>'+y+'</td><td>'+pa[y].toLocaleString()+(has&&pa[y]?' <span class="sub">(2026 at '+Math.round(100*x.n/pa[y])+'%)</span>':'')+'</td></tr>').join('')+'</table>':'<div class="sub">Not a vote center in 2022 or 2024 under this name, so there’s no comparison.</div>';   // Election Day comparisons by building
-   if(window.siteRes)h+=window.siteRes(key,x.id);   // add_results.py
+   else h+=yrs.length?'<div class="agehd">Election Day votes at this site</div><table>'+(has?'<tr><td>2026</td><td>'+x.n.toLocaleString()+'</td></tr>':'')+yrs.map(y=>'<tr><td>'+y+'</td><td>'+pa[y].toLocaleString()+(has&&pa[y]?' <span class="sub">('+((x.n-pa[y])>=0?'+':'')+Math.round(100*(x.n-pa[y])/pa[y])+'%)</span>':'')+'</td></tr>').join('')+'</table>':'<div class="sub">Not a vote center in 2022 or 2024 under this name, so there’s no comparison.</div>';
    if(x.approx)h+='<div class="meta">Map location is approximate for now.</div>';
    pop.innerHTML=h};
   dots.addEventListener('pointerover',e=>{const id=e.target.dataset&&e.target.dataset.id;if(id&&e.pointerType==='mouse')show(L.find(x=>x.id===id))});
@@ -1456,17 +1503,17 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
  estHTML=window.RES?function(o){return '<div class="was"><div class="agehd">Estimate before results</div>'+estH(o)+'</div>'}:estH;
  // ---- the ballots section: the lead card's groups, each party opening into its levels
  const HS='repeating-linear-gradient(135deg,#777 0 2px,#ddd 2px 5px)',COL=k=>(CATS.find(c=>c[0]===k)||[])[2]||'#999';
- let TOT=0;const PC=v=>{if(!TOT||(typeof S==='function'&&v>0&&v<3))return '';const p=Math.round(100*v/TOT);return (v&&p<1?'<1':p)+'%'};   // ui_round23: share of the area's ballots
+ let TOT=0,MXK=0;const BAR=(v,c)=>(!v||!MXK||(typeof S==='function'&&v<3))?'':'<span style="width:'+Math.max(2,Math.round(100*v/MXK))+'%;background:'+c+'"></span>';const PC=v=>{if(!TOT||(typeof S==='function'&&v>0&&v<3))return '';const p=Math.round(100*v/TOT);return (v&&p<1?'<1':p)+'%'};   // ui_round23: share of the area's ballots
  function grp(sw,label,n,kids){const hd='<span class="sw" style="background:'+sw+'"></span><span class="bl">'+label+'</span><span class="bn">'+fmt(n)+'</span><i class="bp">'+PC(n)+'</i>',k=(kids||[]).filter(x=>x[1]);
-  return n&&k.length?'<details class="brow"><summary>'+hd+'</summary><table class="blv">'+k.map(([l,v])=>'<tr><td>'+l+'</td><td>'+fmt(v)+'</td><td class="bp">'+PC(v)+'</td></tr>').join('')+'</table></details>':'<div class="brow">'+hd+'</div>'}
+  return n&&k.length?'<details class="brow"><summary>'+hd+'</summary><table class="blv">'+(MXK=Math.max(0,...k.map(q=>q[1])),k).map(([l,v,c])=>'<tr><td>'+l+'</td><td class="bbar" aria-hidden="true">'+BAR(v,c)+'</td><td>'+fmt(v)+'</td><td class="bp">'+PC(v)+'</td></tr>').join('')+'</table></details>':'<div class="brow">'+hd+'</div>'}
  ballotsBody=function(c){const o=c&&c.o,mf=window.MF;
   if(!o)return '<div>'+(c&&c.few?'Fewer than 3 ballots here through '+DATES[snap]+'. Details are hidden for areas this small.':'No '+(WORD[mf]||'ballots')+' here through '+DATES[snap]+'.')+'</div>';
   const C=o.c||{},g=k=>C[k]||0;TOT=o.n;
   let h='<div class="btot"><span>'+(TAB[mf]||'Ballots cast')+'</span><span>'+fmt(o.n)+(o.nw?' <span class="badge">+'+fmt(o.nw)+'</span>':'')+'</span></div><div class="bgrp">'
-   +grp(COL('Dm'),'D history',g('Ds')+g('Dm')+g('Dw'),[['Strong D',g('Ds')],['Mid D',g('Dm')],['Weak D',g('Dw')]])
-   +grp(COL('Rm'),'R history',g('Rs')+g('Rm')+g('Rw'),[['Strong R',g('Rs')],['Mid R',g('Rm')],['Weak R',g('Rw')]])
+   +grp(COL('Dm'),'D history',g('Ds')+g('Dm')+g('Dw'),[['Strong D',g('Ds'),COL('Ds')],['Mid D',g('Dm'),COL('Dm')],['Weak D',g('Dw'),COL('Dw')]])
+   +grp(COL('Rm'),'R history',g('Rs')+g('Rm')+g('Rw'),[['Strong R',g('Rs'),COL('Rs')],['Mid R',g('Rm'),COL('Rm')],['Weak R',g('Rw'),COL('Rw')]])
    +grp(COL('mix'),'Split evenly',g('mix'))
-   +grp(HS,'No party history',g('gen')+g('gp')+g('nomatch'),[['Presidential voters only',g('gp')],['Other general-election voters',g('gen')],['No Tarrant history',g('nomatch')]])
+   +grp(HS,'No party history',g('gen')+g('gp')+g('nomatch'),[['Presidential voters only',g('gp'),'#8f897f'],['Other general-election voters',g('gen'),'#aaa49a'],['No Tarrant history',g('nomatch'),'#c6c0b6']])
    +grp(HS,'Redacted',o.red||0)+'</div>';
   if(!mf){const ids=new Set(c.ids||[c.id]),T={};
    B.forEach(b=>{if(b[2]>snap)return;const r=regionOf(b[1],layer,b[4],b);if(r==null||!ids.has(r))return;const w=W(b),t=T[b[3]]=T[b[3]]||{n:0,D:0,R:0};t.n+=w;if(b[0][0]==='D')t.D+=w;else if(b[0][0]==='R')t.R+=w});
