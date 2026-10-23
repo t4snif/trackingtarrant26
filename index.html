@@ -512,13 +512,21 @@ a.imore{color:var(--ink);font-weight:700;text-decoration:underline;text-underlin
 /* ui_round32.py: year toggles stay on one row when they fit and wrap when the text is large, never overflowing */
 #hyears{display:flex!important;flex-wrap:wrap;gap:6px}
 #hyears button{flex:1 1 0;min-width:max-content;padding:7px 6px}
+
+/* ui_round35.py: site slider, side column */
+.sitecol{display:flex;flex-direction:column;gap:10px;min-width:0}
+.sitecol .sitekey{margin:0}
+.siteslide{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px 8px}
+.siteslidehd{display:flex;align-items:baseline;gap:8px}.siteslidehd .lbl{margin:0}
+.siteslide input{width:100%;accent-color:#8a6cc4;margin:6px 0 0}
+@media (max-width:1099px){.siterow{grid-template-columns:minmax(0,1fr)!important}}
 </style></head><body><main>
 <!--HERO-->
 <header class="mast"><span class="upd" id="upd" data-at="2026-10-21T18:00:12-05:00">MAIL BALLOT REPORT MADE 10.21, 6:00:12 PM CT</span></header>
 <h1 class="title">Tracking the Early Vote in Tarrant County</h1>
 <div class="hero">
 <div class="heroL"><div class="big" style="--em:4.14">164,126</div><div class="bigsub">ballots cast so far</div><div><span class="badge lg">+50,615 ON OCT. 21</span></div><p class="mailnote">Mail counts rarely update on Sundays and postal holidays.</p><p class="cta">Want to be a part of this number? <a href="#plan" class="planlink">Plan your vote<span aria-hidden="true"> →</span></a></p></div>
-<div class="heroR"><p class="disc">Not endorsed by any candidate or campaign. Not a political advertisement. Early estimates, not results. On election night the county’s results take their place as they come in, and these estimates and the daily snapshots stay on the map to compare; see <a href="#how" class="howlink">How this works</a>.</p><div class="cards"><div class="card"><b>163,837</b><span>NAMED VOTERS <span class="sep" aria-hidden="true">✦</span> <span class="pctn">100% OF BALLOTS</span></span><i><em class="d">70,370 D history</em> <i class="pc">(43%)</i> <span class="sep" aria-hidden="true">✦</span> <em class="r">53,599 R history</em> <i class="pc">(33%)</i> <span class="sep" aria-hidden="true">✦</span> <em class="m">2,325 split evenly</em> <i class="pc">(1%)</i> <span class="sep" aria-hidden="true">✦</span> <em class="x">37,543 no party history</em> <i class="pc">(23%)</i> <span class="sep" aria-hidden="true">✦</span> <em class="rd">287 redacted</em> <i class="pc">(<1%)</i></i></div><div class="card"><b class="d">D+14</b><span>ESTIMATED LEAD</span><i>Range: <em class="r">R+12</em> to <em class="d">D+34</em></i></div></div></div>
+<div class="heroR"><p class="disc">Not endorsed by any candidate or campaign. Not a political advertisement. Early estimates, not results. On election night the county’s results take their place as they come in, and these estimates and the daily snapshots stay on the map to compare; see <a href="#how" class="howlink">How this works</a>.</p><div class="cards"><div class="card"><b>163,837</b><span>NAMED VOTERS, BY PARTY HISTORY</span><i><em class="d">70,370 D</em> <i class="pc">(43%)</i> <span class="sep" aria-hidden="true">✦</span> <em class="r">53,599 R</em> <i class="pc">(33%)</i> <span class="sep" aria-hidden="true">✦</span> <em class="m">2,325 split</em> <i class="pc">(1%)</i> <span class="sep" aria-hidden="true">✦</span> <em class="x">37,543 no history</em> <i class="pc">(23%)</i> <span class="sep" aria-hidden="true">✦</span> <em class="rd">287 redacted</em> <i class="pc">(<1%)</i></i></div><div class="card"><b class="d">D+14</b><span>ESTIMATED LEAD</span><i>Range: <em class="r">R+12</em> to <em class="d">D+34</em></i></div></div></div>
 </div>
 <script type="application/json" id="figs">{"est": 0.5673, "lo": 0.4358, "hi": 0.6663, "dp": 57, "dlo": 44, "dhi": 67, "show_est": false, "age65_regular_mail": "12529 of 13024", "age65_sent_electronically": "66 of 329", "ctot": 164126, "mtot": 13772, "evtot": 150354, "evna": false, "listed": 13770, "evlisted": 150354, "daily": [["9/24", 2, 0, 0], ["9/25", 4, 0, 0], ["9/28", 22, 0, 0], ["9/29", 18, 0, 0], ["9/30", 14, 0, 0], ["10/1", 22, 0, 0], ["10/2", 24, 0, 0], ["10/3", 23, 0, 0], ["10/5", 37, 0, 0], ["10/6", 94, 0, 0], ["10/7", 212, 0, 0], ["10/8", 605, 0, 0], ["10/9", 1122, 0, 0], ["10/13", 2377, 0, 0], ["10/14", 1384, 0, 0], ["10/15", 1850, 0, 0], ["10/16", 1714, 0, 0], ["10/17", 1164, 0, 0], ["10/19", 1248, 50409, 0], ["10/20", 147, 51019, 0], ["10/21", 1689, 48926, 0]], "report_time": "2026-10-21T18:00:12", "fpca": 530, "regmail": 13242, "abs_through": "10/21"}</script>
 <!--/HERO-->
@@ -1220,6 +1228,16 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
    pop.innerHTML=h};
   // ui_round27: 1, 2, 3 inside the three busiest circles (drawn above the dots, not tappable themselves)
   if(has){const g=document.createElementNS(NS,'g');g.setAttribute('class','ranks');g.setAttribute('aria-hidden','true');ranked.slice(0,3).forEach((x,i)=>{const t=document.createElementNS(NS,'text');t.setAttribute('x',x.x);t.setAttribute('y',x.y);t.textContent=String(i+1);t.style.fontSize=Math.max(11,R(x)*.9)+'px';g.appendChild(t)});svg.appendChild(g)}
+  // ui_round35: day slider (each site's ballots through the chosen day, on the latest day's scale)
+  if(has&&days.length>1){const box=document.createElement('div');box.className='siteslide';const lab=document.createElement('span');lab.className='lbl';lab.textContent='BALLOTS THROUGH';
+   const out=document.createElement('b'),inp=document.createElement('input');inp.type='range';inp.min=0;inp.max=days.length-1;inp.value=days.length-1;inp.setAttribute('aria-label','Show ballots through this day');
+   const hd=document.createElement('div');hd.className='siteslidehd';hd.append(lab,out);box.append(hd,inp);(wrap.nextElementSibling&&wrap.nextElementSibling.classList.contains('sitekey')?wrap.nextElementSibling:wrap).after(box);
+   const setDay=i=>{out.textContent=days[i]+(i===days.length-1?', latest':'');const nn=x=>(C[x.id]||[]).slice(0,i+1).reduce((a,b)=>a+b,0),rr=x=>Math.max(2.5,36*Math.sqrt(nn(x)/mx));
+    L.forEach(x=>{const c=dots.querySelector('[data-id="'+x.id+'"]');if(c)c.setAttribute('r',rr(x))});
+    const top3=L.slice().sort((a,b)=>nn(b)-nn(a)).slice(0,3),rg=svg.querySelector('.ranks');if(rg)[...rg.children].forEach((t,j)=>{const x=top3[j];if(!x)return;t.setAttribute('x',x.x);t.setAttribute('y',x.y);t.style.fontSize=Math.max(11,rr(x)*.9)+'px'})};
+   inp.oninput=()=>setDay(+inp.value);setDay(days.length-1)}
+  // ui_round35: key, slider and details in the column beside the map (laptops)
+  {const row=wrap&&wrap.parentElement;if(row&&row.classList.contains('siterow')){let col=row.querySelector(':scope>.sitecol');if(!col){col=document.createElement('div');col.className='sitecol';row.appendChild(col)}[...row.children].filter(e=>e!==wrap&&e!==col).forEach(e=>col.appendChild(e))}}
   dots.addEventListener('pointerover',e=>{const id=e.target.dataset&&e.target.dataset.id;if(id&&e.pointerType==='mouse')show(L.find(x=>x.id===id))});
   dots.addEventListener('click',e=>{const id=e.target.dataset&&e.target.dataset.id;if(id)show(L.find(x=>x.id===id))});
   dots.addEventListener('keydown',e=>{const id=e.target.dataset&&e.target.dataset.id;if(id&&(e.key==='Enter'||e.key===' ')){e.preventDefault();show(L.find(x=>x.id===id))}});   // keyboard: Tab to a site, Enter to open it
@@ -1493,7 +1511,7 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
   const PCT=x=>' <i class="pc">('+(x&&Math.round(100*x/n)<1?'<1':Math.round(100*x/n))+'%)</i>',named=n-red,nh=named-D-R-M,k=D+.5*M,est=(k+uP)/n,lo=k/n,hi=(k+U)/n,Dp=Math.round(est*100),ld=2*Dp-100,Dlo=Math.round(lo*100),Dhi=Math.round(hi*100);
   const lead=ld>0?'<b class="d">D+'+ld+'</b>':ld<0?'<b class="r">R+'+(-ld)+'</b>':'<b>Even</b>',RG=v=>v>0?'<em class="d">D+'+v+'</em>':v<0?'<em class="r">R+'+(-v)+'</em>':'<em>Even</em>';
   const who={M:'MAIL',E:'EARLY',D:'ELECTION DAY'}[mf];
-  cards.innerHTML='<div class="card"><b>'+fmt(named)+'</b><span>NAMED '+who+' VOTERS'+SEP+'<span class="pctn">'+Math.round(100*named/n)+'% OF '+who+' BALLOTS</span></span><i><em class="d">'+fmt(D)+' D history</em>'+PCT(D)+SEP+'<em class="r">'+fmt(R)+' R history</em>'+PCT(R)+SEP+'<em class="m">'+fmt(M)+' split evenly</em>'+PCT(M)+SEP+'<em class="x">'+fmt(nh)+' no party history</em>'+PCT(nh)+SEP+'<em class="rd">'+fmt(red)+' redacted</em>'+PCT(red)+'</i></div>'
+  cards.innerHTML='<div class="card"><b>'+fmt(named)+'</b><span>NAMED '+who+' VOTERS, BY PARTY HISTORY</span><i><em class="d">'+fmt(D)+' D</em>'+PCT(D)+SEP+'<em class="r">'+fmt(R)+' R</em>'+PCT(R)+SEP+'<em class="m">'+fmt(M)+' split</em>'+PCT(M)+SEP+'<em class="x">'+fmt(nh)+' no history</em>'+PCT(nh)+SEP+'<em class="rd">'+fmt(red)+' redacted</em>'+PCT(red)+'</i></div>'
    +'<div class="card">'+lead+'<span>ESTIMATED LEAD, '+who+' '+(mf==='M'?'BALLOTS':'VOTES')+'</span><i>Range: '+RG(2*Dlo-100)+' to '+RG(2*Dhi-100)+'</i></div>';
  }
  document.addEventListener('methodchange',()=>setTimeout(draw,0));
@@ -1631,7 +1649,7 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
   if(vs.value!=='sites'){vs.value='sites';vs.dispatchEvent(new Event('change'))}document.querySelectorAll('.viewbtns button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v==='sites')))}
  document.addEventListener('methodchange',()=>setTimeout(edEmpty,30));
 })();
-</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.10.0</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-10-21 18:00 CT</span><!--/VER--></footer>
+</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.11.0</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-10-21 18:00 CT</span><!--/VER--></footer>
 <script>(function(){   // ui_round29: the stamp goes at the end of the page's main column
  const f=document.getElementById('verfoot'),w=document.querySelector('.wrap');if(f&&w)w.appendChild(f)})();</script>
 <script>
