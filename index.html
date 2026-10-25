@@ -552,6 +552,53 @@ tr.seld td{font-weight:800;background:var(--panel)}
  #hyears{gap:4px!important}#hyears button{min-width:0!important;padding:6px 2px!important;font-size:.8rem!important}#hyears button i{width:9px!important;margin-right:3px!important}#hyears button[aria-pressed="true"]::before{margin-right:2px}
  .sitesnap .viewbtns{margin-left:0}
 }
+
+/* ui_round37.py: pills as rectangles; years in their chart colors; tighter phones; two-column Voters */
+.viewbtns{border:0!important;border-radius:6px;overflow:visible!important;gap:0}
+.viewbtns button{border:1.5px solid var(--ink)!important;border-radius:0;margin:0}
+.viewbtns button+button{margin-left:-1.5px}
+.viewbtns button:first-child{border-radius:6px 0 0 6px}.viewbtns button:last-of-type{border-radius:0 6px 6px 0}
+.viewbtns button[aria-pressed="true"]{position:relative;z-index:1}
+#hyears button{--yc:var(--ink);--yt:var(--ink);--yf:var(--ink);--yo:var(--bg);border:1.5px solid var(--yc)!important;color:var(--yt)!important;background:transparent!important;opacity:1!important;text-decoration:none!important;font-weight:800;border-radius:6px}
+#hyears button[aria-pressed="true"]{background:var(--yf)!important;border-color:var(--yf)!important;color:var(--yo)!important}
+#hyears button::before{content:none!important}
+#hyears button i{display:none!important}
+#hyears button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+#hyears button[data-y="2018"]{--yc:#8f7556;--yt:#866e51;--yf:#866e51;--yo:#fffbef}
+#hyears button[data-y="2020"]{--yc:#8a6a52;--yt:#8a6a52;--yf:#8a6a52;--yo:#fffbef}
+#hyears button[data-y="2022"]{--yc:#8a8a8a;--yt:#717171;--yf:#929292;--yo:#3b2418}
+#hyears button[data-y="2024"]{--yc:#d17a00;--yt:#a76200;--yf:#d27e08;--yo:#3b2418}
+#hyears button[data-y="2026"]{--yc:#3b2418;--yt:#3b2418;--yf:#3b2418;--yo:#fffbef}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #hyears button[data-y="2018"]{--yt:#9a8367}:root:not([data-theme="light"]) #hyears button[data-y="2020"]{--yt:#9d826e}:root:not([data-theme="light"]) #hyears button[data-y="2022"]{--yt:#8a8a8a}:root:not([data-theme="light"]) #hyears button[data-y="2024"]{--yt:#d17a00}:root:not([data-theme="light"]) #hyears button[data-y="2026"]{--yc:#fffbef;--yt:#fffbef;--yf:#fffbef;--yo:#3b2418}}
+:root[data-theme="dark"] #hyears button[data-y="2018"]{--yt:#9a8367}:root[data-theme="dark"] #hyears button[data-y="2020"]{--yt:#9d826e}:root[data-theme="dark"] #hyears button[data-y="2022"]{--yt:#8a8a8a}:root[data-theme="dark"] #hyears button[data-y="2024"]{--yt:#d17a00}:root[data-theme="dark"] #hyears button[data-y="2026"]{--yc:#fffbef;--yt:#fffbef;--yf:#fffbef;--yo:#3b2418}
+.dpanel .dists{text-align:left;hyphens:manual}.dpanel .dists abbr{text-decoration:none;cursor:help}
+details.more .find{margin:8px 0 12px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sitesnap.k-ev .snaplat{color:#c3b1e8}:root:not([data-theme="light"]) .sitesnap.k-vc .snaplat{color:#b5d1ae}}
+:root[data-theme="dark"] .sitesnap.k-ev .snaplat{color:#c3b1e8}:root[data-theme="dark"] .sitesnap.k-vc .snaplat{color:#b5d1ae}
+@media (max-width:760px){
+ .demos{grid-template-columns:repeat(auto-fit,minmax(155px,1fr))!important;gap:6px 14px!important}
+ table.demo{font-size:.8rem}
+ table.demo td{padding:3px 0 3px 6px}
+ table.demo tr.h td{font-size:.6rem;letter-spacing:.05em;vertical-align:bottom}
+ table.demo td:first-child{white-space:nowrap}
+ table.demo.vtype td:first-child{white-space:normal}
+ .demos h3{font-size:1.05rem;margin:4px 0 2px}
+ .demos .note{font-size:.78rem;margin:4px 0 8px}
+}
+@media (max-width:600px){
+ html{font-size:92%}
+ body{font-size:14.7px}
+ .sh{margin:28px 0 10px!important;padding-top:14px!important}
+ .hero{margin-bottom:22px!important}
+ .heroL{padding:20px 16px!important;gap:8px!important}
+ .heroR{padding:16px 2px 18px!important;gap:10px!important}
+ .card{padding:10px 12px}
+ .snapbar{margin:10px 0 8px;padding:9px 11px 7px}
+ .mapctl{gap:8px 22px!important}
+ .ctlgrid{gap:6px!important}
+ .dpanel.pop{padding:10px 12px!important}
+ .viewrow{margin:0 0 10px!important}
+}
 </style></head><body><main>
 <!--HERO-->
 <header class="mast"><span class="upd" id="upd" data-at="2026-10-23T18:35:04-05:00">MAIL BALLOT REPORT MADE 10.23, 6:35:04 PM CT</span></header>
@@ -610,11 +657,11 @@ tr.seld td{font-weight:800;background:var(--panel)}
  <p class="tsub" id="tnote"></p>
  <div class="tbar" id="tbar" role="img" aria-label="Ballots so far as a share of registered voters, with past final turnout marked"></div><div class="tscale" id="tscale" aria-hidden="true"></div>
  <div class="row" id="hmode" role="group" aria-label="Voting method"><button data-m="all" aria-pressed="false">All methods</button><button data-m="mail" aria-pressed="true">Mail ballots received</button><button data-m="inperson" aria-pressed="false">Early in person</button></div>
- <div class="ctlrow"><div class="row" id="hscale" role="group" aria-label="Scale"><button data-s="cum" aria-pressed="true">Running total</button><button data-s="day" aria-pressed="false">Per day</button></div><div class="row" id="hrange" role="group" aria-label="Time range"><button data-r="sofar" aria-pressed="true">So far</button><button data-r="20" aria-pressed="false">From 20 days out</button><button data-r="all" aria-pressed="false">Through Election Day</button></div></div>
+ <div class="ctlrow"><div class="row" id="hscale" role="group" aria-label="Scale"><button data-s="cum" aria-pressed="true">Running total</button><button data-s="day" aria-pressed="false">Per day</button></div><div class="row" id="hrange" role="group" aria-label="Time range"><button data-r="sofar" aria-pressed="true">So far</button><button data-r="all" aria-pressed="false">Through Election Day</button></div></div>
  <div class="row" id="hyears" role="group" aria-label="Years shown" style="margin-top:6px"><button data-y="2026" aria-pressed="true"><i style="color:#3b2418"></i>2026</button><button data-y="2024" aria-pressed="false"><i style="color:#d17a00"></i>2024</button><button data-y="2022" aria-pressed="true"><i style="color:#8a8a8a;border-top-style:dashed"></i>2022</button><button data-y="2020" aria-pressed="false"><i style="color:#8a6a52"></i>2020</button><button data-y="2018" aria-pressed="true"><i style="color:#8f7556;border-top-style:dashed"></i>2018</button></div>
  <div class="hchart" id="hchart"><svg id="hsvg" role="img" aria-label="Turnout by days before Election Day, 2018 to 2026"></svg><div class="htip" id="htip" hidden></div></div>
  <p class="note" id="hnote"></p>
- <p class="note" id="pacenote">Each year is lined up by days before its Election Day. Early voting ran from 15 to 4 days out (from 21 days out in 2020). Dashed lines are midterms. Mail ballots that arrived after Election Day are left off. Source: Tarrant County daily totals.</p>
+ <p class="note" id="pacenote">Each year is lined up by days before its Election Day, starting 20 days out. Early voting ran from 15 to 4 days out (from 21 days out in 2020). Dashed lines are midterms. Mail ballots that arrived after Election Day are left off. Source: Tarrant County daily totals.</p>
  <!--WHO--><h2 class="sh"><span class="n">03</span>Voters</h2>
 <p class="note" id="whonote" style="margin-top:0">Countywide, through 10/23. Each table counts only ballots where that detail is known. Among mail voters with a known age, 14,840 of 15,488 sent a regular mail ballot are 65 or older, as are 76 of 386 sent theirs electronically (mostly military and overseas).</p>
 <div class="demos"><div><h3>Age</h3><table class="demo"><tr class="h"><td></td><td>Ballots</td><td>Registered voters</td></tr><tr><td>18–29</td><td>25,610 (10%)</td><td>21%</td></tr><tr><td>30–44</td><td>44,438 (17%)</td><td>27%</td></tr><tr><td>45–64</td><td>85,956 (33%)</td><td>31%</td></tr><tr><td>65+</td><td>105,468 (40%)</td><td>21%</td></tr></table><p class="note">2,535 unknown (1%)</p></div><div><h3>Gender</h3><table class="demo"><tr class="h"><td></td><td>Ballots</td><td>Registered voters</td></tr><tr><td>Women</td><td>138,985 (55%)</td><td>53%</td></tr><tr><td>Men</td><td>114,727 (45%)</td><td>47%</td></tr></table><p class="note">10,295 unknown (4%)</p></div><div><h3>First registered</h3><table class="demo"><tr class="h"><td></td><td>Ballots</td></tr><tr><td>2024 or later</td><td>29,054 (11%)</td></tr><tr><td>2020–2023</td><td>39,153 (15%)</td></tr><tr><td>2016–2019</td><td>34,663 (13%)</td></tr><tr><td>2006–2015</td><td>50,227 (19%)</td></tr><tr><td>Before 2006</td><td>108,374 (41%)</td></tr></table><p class="note">2,536 unknown (1%)</p></div><div><h3>Vote type</h3><table class="demo vtype"><tr class="h"><td></td><td>Ballots</td></tr><tr><td><button type="button" class="vtog" aria-expanded="false" aria-controls="vsub1 vsub2">Mail</button></td><td>16,342</td></tr><tr class="vret"><td>Returned of 27,683 sent</td><td>59%</td></tr><tr class="vsub" id="vsub1" hidden><td>Regular mail</td><td>15,711</td></tr><tr class="vsub" id="vsub2" hidden><td>FPCA</td><td>631</td></tr><tr><td>Early in person</td><td data-vt="evtot">247,668</td></tr><tr><td>Election Day</td><td data-vt="vc">Nov. 3</td></tr></table><p class="note">County totals through 10/23. FPCA ballots go to military and overseas voters.</p></div></div>
@@ -645,7 +692,7 @@ tr.seld td{font-weight:800;background:var(--panel)}
 <details class="topic"><summary><span class="tt">Lead and Range</span></summary><div class="tb"><p>This is bookkeeping, not a poll or a forecast. Each voter with a Democratic history counts 1 toward Democrats, each with a Republican history 0, and a split record ½. Each ballot with no party history counts as its precinct’s Democratic share of March 2026 primary ballots (the county’s share if the precinct had none).</p><p>The range shows how far the unknowns could move it: the low end counts every one of them as Republican, the high end as Democratic. Every precinct and district panel uses the same formula; areas with fewer than 5 ballots show only their counts.</p><details class="math"><summary>Show the math</summary><math display="block"><mi>estimate</mi><mo>=</mo><mfrac><mrow><mi>D</mi><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>M</mi><mo>+</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>U</mi></munderover><msub><mi>p</mi><mi>i</mi></msub></mrow><mrow><mi>N</mi></mrow></mfrac></math><p>where <i>D</i> = voters with a Democratic history, <i>M</i> = split records, <i>U</i> = ballots with no party history (redacted ones included), <i>p<sub>i</sub></i> = the Democratic share of March 2026 primary ballots in the precinct of the <i>i</i>-th of those ballots, and <i>N</i> = all ballots returned so far. <i>N</i> is every returned ballot, not a sample, so there is no sampling error; the range below shows the uncertainty instead.</p><math display="block"><mi>low</mi><mo>=</mo><mfrac><mrow><mi>D</mi><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>M</mi></mrow><mrow><mi>N</mi></mrow></mfrac></math><math display="block"><mi>high</mi><mo>=</mo><mfrac><mrow><mi>D</mi><mo>+</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>M</mi><mo>+</mo><mi>U</mi></mrow><mrow><mi>N</mi></mrow></mfrac></math><math display="block"><mi>lead</mi><mo>=</mo><mn>2</mn><mo>×</mo><mi>estimate</mi><mo>−</mo><mn>1</mn></math><p>That is the Democratic share minus the Republican share. Shares are rounded to whole points first, so the lead is always an even number of points.</p></details></div></details>
 <details class="topic"><summary><span class="tt">Shading</span></summary><div class="tb"><ul><li><b>Estimated lead:</b> each area’s lead from the formula under Lead and Range, the same figure its details panel shows. Blue is a Democratic lead, red a Republican lead and white even; darker means a bigger lead. Areas with fewer than 5 ballots stay gray. Diagonal lines mark areas where more than half of the ballots have no party history.</li><li><b>March primary result:</b> Democratic minus Republican share of the area’s March 2026 primary ballots.</li><li><b>Compared with the March primary:</b> arrows comparing voters returning ballots with the area’s March primary voters. Left means more Democratic, right more Republican, and a longer arrow is a bigger gap. Areas need at least 5 returning voters with a party history.</li><li><b>Compared with 2024 (president):</b> the same comparison against each area’s 2024 Harris share of the two-party vote. 2024 precincts are moved to today’s areas by where their voters are registered now.</li><li><b>Turnout (percentage):</b> ballots cast divided by registered voters (active and suspense).</li><li><b>Turnout (raw votes):</b> the number of ballots cast in each area.</li><li><b>Votes still expected:</b> a circle in each area, sized by the votes it should still cast before the polls close (see Votes Still Expected).</li></ul><p>Districts are built from voting precincts, and each ballot is placed by the district codes the county gives it. Precincts split by a city or district line are approximate.</p><details class="math"><summary>Show the math</summary><p>For the comparison arrows, <i>s</i> is the Democratic share (Democratic, plus half of split, over everyone with a party history):</p><math display="block"><mi>Δ</mi><mo>=</mo><msub><mi>s</mi><mtext>returning</mtext></msub><mo>−</mo><msub><mi>s</mi><mtext>baseline</mtext></msub></math><math display="block"><mtext>length</mtext><mo>∝</mo><mo>min</mo><mo>(</mo><mo>|</mo><mi>Δ</mi><mo>|</mo><mo>,</mo><mn>0.30</mn><mo>)</mo></math><p>An arrow’s length grows with the gap and reaches full length at 30 points.</p></details></div></details>
 <details class="topic"><summary><span class="tt">Census Filters</span></summary><div class="tb"><p>Figures come from Census block groups, split into precincts and districts by how much of each block group’s land falls inside, so small precincts are approximate. Race uses adult citizens, which fits the electorate better than total population. Areas with fewer than 100 adult citizens are never selected.</p><details class="math"><summary>Show the math</summary><math display="block"><msub><mi>x</mi><mtext>area</mtext></msub><mo>=</mo><munder><mo>∑</mo><mi>b</mi></munder><msub><mi>w</mi><mi>b</mi></msub><msub><mi>x</mi><mi>b</mi></msub></math><p>where <i>x<sub>b</sub></i> is a block group’s count and <i>w<sub>b</sub></i> is the share of its land inside the area.</p></details></div></details>
-<details class="topic"><summary><span class="tt">Turnout</span></summary><div class="tb"><ul><li>Past years use the county’s daily totals for the 2018–2024 November elections (2016 too, for Votes Still Expected). Mail ballots that arrived after Election Day are left off.</li><li>Polling locations: circle area shows each site’s ballots through the day on the slider, or on that day alone with “That day” (sized against the busiest single day at any site). The 1, 2 and 3 marks and each site’s panel follow the slider.</li><li>The same-day comparison divides each year’s ballots by that year’s registration.</li><li>The turnout bar marks final turnout in the 2018 and 2022 midterms.</li><li>No mail arrives on Sundays and federal holidays, and the county doesn’t always count on weekends, so lines go flat and then jump.</li></ul></div></details>
+<details class="topic"><summary><span class="tt">Turnout</span></summary><div class="tb"><ul><li>Past years use the county’s daily totals for the 2018–2024 November elections (2016 too, for Votes Still Expected). Mail ballots that arrived after Election Day are left off.</li><li>Polling locations: circle area shows each site’s ballots through the day on the slider, or on that day alone with “That day” (sized against the busiest single day at any site). The 1, 2 and 3 marks and each site’s panel follow the slider.</li><li>The same-day comparison divides each year’s ballots by that year’s registration.</li><li>The turnout bar marks final turnout in 2018, 2022 and 2024.</li><li>No mail arrives on Sundays and federal holidays, and the county doesn’t always count on weekends, so lines go flat and then jump.</li></ul></div></details>
 <details class="topic"><summary><span class="tt">Votes Still Expected</span></summary><div class="tb"><p>A projection of how many more votes each area should cast before the polls close on Nov. 3. It is not a count, and it says nothing about party. It updates with each early voting and mail report.</p><ul><li>Early in person: the count so far divided by the share of early voting that past Novembers (2016, 2018, 2022 and 2024) had cast by the same day of the period, averaged. Predicting each of those years from the other three, this missed the full early vote by 4% on average at day 4, and by under 3% from day 10 on.</li><li>Mail: ballots received so far divided by the share of final mail ballots that 2018, 2022 and 2024 had received the same number of days before Election Day.</li><li>Election Day: 14.34% of registered voters. That was the Election Day share in both recent midterms (14.39% in 2018, 14.29% in 2022), even though early voting differed a lot between them. Its range is plus or minus 10%.</li><li>By area: every registered voter who hasn’t voted yet gets a chance of voting from their own record (past general elections and primaries, age, how long they’ve been registered, and active or suspense status). Each chance is adjusted for how much of that voter’s likely ballot is already due, given how they voted in 2022 and 2024, and for how far ahead of or behind its usual pace their precinct is running. The chances are then scaled to the countywide total, split by method, and added up by area.</li><li>The 80% range combines the countywide range with the error measured when this method predicted 2022 by precinct: about 7 to 8% for districts and 10% for large precincts, up to 25 to 40% for precincts under 300 expected voters. Precincts under 150 expected voters say the estimate is rough.</li><li>Each tab shows its own part: All methods, everything until the polls close; Early in person, the rest of early voting (through Oct. 30); Election Day; Mail, mail ballots still to come. “Already cast” compares the ballots in so far with those plus the ones still expected.</li><li>Thanks to Tyler McVety, whose early-vote nowcast informed the comparison with past years’ daily patterns.</li></ul><details class="math"><summary>Show the math</summary><p>Early in person, after <i>k</i> days with <i>c</i> votes so far, where <i>s</i><sub><i>y</i></sub>(<i>k</i>) is the share of year <i>y</i>’s early vote cast by day <i>k</i>:</p><math display="block"><mi>E</mi><mo>=</mo><mfrac><mi>c</mi><mrow><mtext>average of&nbsp;</mtext><msub><mi>s</mi><mi>y</mi></msub><mo>(</mo><mi>k</mi><mo>)</mo></mrow></mfrac></math><p>A voter with chance <i>p</i> of voting, who hasn’t voted yet, with share <i>q</i> of their likely ballot already due, in a precinct running at <i>r</i> times its expected pace:</p><math display="block"><msub><mi>p</mi><mtext>still</mtext></msub><mo>=</mo><mfrac><mrow><mi>p</mi><mo>(</mo><mn>1</mn><mo>−</mo><mi>q</mi><mo>)</mo></mrow><mrow><mn>1</mn><mo>−</mo><mi>p</mi><mi>q</mi></mrow></mfrac><mo>×</mo><msup><mi>r</mi><mn>0.4</mn></msup></math><p>All voters’ chances are moved up or down together until they add up to the countywide figure.</p></details></div></details>
 <details class="topic"><summary><span class="tt">Election Night</span></summary><div class="tb"><ul><li>The county’s first report, due by 7:15 p.m., has countywide totals for mail and early in-person votes only. Election Day votes are added through the night, and precinct-by-precinct results follow.</li><li>With each report, the top of the page switches to results: ballots counted, the race picked under “Results for” (U.S. Senate first, County Judge and every other countywide race in the menu), and a list of every race with each candidate’s votes. The Mail, Early in person and Election Day tabs show the votes cast that way.</li><li>Until precinct results are posted, district panels (Congress, Texas House and Senate, State Board of Education, Commissioner, Justice of the Peace) show their race’s Tarrant County totals. Once they are posted, the map is shaded by the party lead and every panel shows its races. Cities, council districts and school districts cut through precincts, so their figures are estimates and say so.</li><li>The estimates and daily snapshots from before results stay on the map: in each panel under “Estimate before results,” in the Shading menu and on the snapshot slider.</li><li>No race calls. This website will not update races as called until the results have been certified by the county, which may take multiple days or weeks. Until then, candidates are listed in party order, never by who is ahead, and nothing is marked as won.</li><li>Before results go up, every race total is checked against the county’s report and every district against its own precincts. A report that can’t be read or doesn’t add up is not posted, and the page keeps the last one that did.</li></ul></div></details>
 <details class="topic"><summary><span class="tt">Limitations</span></summary><div class="tb"><ul><li>A primary choice is not a November vote. People cross over, and many November voters skip primaries.</li><li>Most mail voters are 65 or older, so early numbers lean older than the full electorate.</li><li>Redacted ballots and voters who skip primaries add no party information, which is why the range is wide.</li><li>When the county blanks a voter’s history, older rosters restore most of it, but a few voters may sit one tier too low.</li><li>Small areas can swing a lot on a few ballots.</li><li>Votes still expected follows past patterns. An unusual year can miss, most of all on Election Day and in small precincts.</li></ul></div></details>
@@ -793,7 +840,7 @@ function demoDets(c){const o=c.o||{ag:{},sx:{},rg:{},bt:{},n:0},rg=c.reg;let h='
  if(o.n){const bt=o.bt||{};h+=det('Ballot type',S(bt.E||0)+' sent electronically, '+S(bt.R||0)+' regular mail','<table class="age"><tr><td>Sent electronically (mostly FPCA)</td><td>'+S(bt.E||0)+'</td></tr><tr><td>Regular mail</td><td>'+S(bt.R||0)+'</td></tr><tr><td>Redacted, type unknown</td><td>'+S(bt.u||0)+'</td></tr></table>')}
  return h}
 function extrasHTML(id){
- if(layer==='pct'){const a=ATTR[id];if(!a)return '';return '<div class="sub">County commissioner '+a[0]+' <span class="sep" aria-hidden="true">✦</span> Justice of the Peace '+a[1]+' <span class="sep" aria-hidden="true">✦</span> U.S. House '+a[2]+' <span class="sep" aria-hidden="true">✦</span> Texas Senate '+a[3]+' <span class="sep" aria-hidden="true">✦</span> Texas House '+a[4]+' <span class="sep" aria-hidden="true">✦</span> State Board of Education '+a[5]+'</div>'}
+ if(layer==='pct'){const a=ATTR[id];if(!a)return '';return '<div class="sub dists"><abbr title="County commissioner">Comm.</abbr> '+a[0]+' <span class="sep" aria-hidden="true">✦</span> <abbr title="Justice of the Peace">JP</abbr> '+a[1]+' <span class="sep" aria-hidden="true">✦</span> <abbr title="U.S. House">CD</abbr> '+a[2]+' <span class="sep" aria-hidden="true">✦</span> <abbr title="Texas Senate">SD</abbr> '+a[3]+' <span class="sep" aria-hidden="true">✦</span> <abbr title="Texas House">HD</abbr> '+a[4]+' <span class="sep" aria-hidden="true">✦</span> <abbr title="State Board of Education">SBOE</abbr> '+a[5]+'</div>'}
  const ids=Object.keys(GEO[layer]),N=ids.length,nOf=i=>(agg[i]||{}).n||0,o=agg[id];let h='';
  if(o){const rb=1+ids.filter(i=>nOf(i)>nOf(id)).length,tv=i=>{const r=(REG[layer]||{})[i];return r&&r[0]>=25?nOf(i)/r[0]:null},me=tv(id);
   h+='<div class="sub">Ballots: '+ord(rb)+' of '+N+(me!==null?' <span class="sep" aria-hidden="true">✦</span> Turnout: '+ord(1+ids.filter(i=>tv(i)!==null&&tv(i)>me).length)+' of '+ids.filter(i=>tv(i)!==null).length:'')+'</div>';
@@ -1046,7 +1093,7 @@ function draw(){
  svg.setAttribute('viewBox','0 0 '+W+' '+H);svg.innerHTML='';
  const S=YEARS.map(([y])=>on.has(y)?series(mode,scale,y):[]);
  const allD=S.flat().map(p=>p.d);let dmax=mode==='inperson'?Math.max(15,...allD):Math.min(45,Math.max(...allD,20)),dmin=mode==='inperson'?4:0;
- const n26=series(mode,scale,'2026');if(range==='sofar'&&n26.length){dmax=Math.min(dmax,Math.max(...n26.map(p=>p.d))+1);dmin=Math.max(dmin,Math.min(...n26.map(p=>p.d))-1)}if(mode==='all')dmax=Math.min(dmax,20);   // ui_round33: All methods starts 20 days out
+ const n26=series(mode,scale,'2026');if(range==='sofar'&&n26.length){dmax=Math.min(dmax,Math.max(...n26.map(p=>p.d))+1);dmin=Math.max(dmin,Math.min(...n26.map(p=>p.d))-1)}dmax=Math.min(dmax,20);   // ui_round37: every tab starts 20 days out
  if(range==='20'){dmax=Math.min(dmax,20);if(n26.length)dmin=Math.max(dmin,Math.min(...n26.map(p=>p.d))-1)}   // ui_round31
  S.forEach((a,i)=>S[i]=a.filter(p=>p.d<=dmax&&p.d>=dmin));
  const ymax=Math.max(...S.flat().map(p=>p.v),1),[top,ticks]=nice(ymax);
@@ -1070,11 +1117,11 @@ function draw(){
   let rows='';YEARS.forEach(([y,col],i)=>{const q=S[i].filter(p=>p.d>=d).at(-1),ex=S[i].find(p=>p.d===d);const v=scale==='cum'?(q?q.v:0):(ex?ex.v:0);const show=S[i].length&&(scale==='cum'?S[i].some(p=>p.d<=d)||q:true);
    if(ex){dots[i].setAttribute('cx',X(d));dots[i].setAttribute('cy',Y(ex.v));dots[i].setAttribute('visibility','visible')}else dots[i].setAttribute('visibility','hidden');
    if(S[i].length&&S[i].some(p=>p.d<=d)||ex)rows+='<div><i style="color:'+col+'"></i>'+y+(ex?' ('+fmtD(ex.date)+')':'')+': <b style="display:inline">'+v.toLocaleString()+'</b></div>'});
-  cur.setAttribute('x1',X(d));cur.setAttribute('x2',X(d));cur.setAttribute('visibility','visible');
+  box._d=d;cur.setAttribute('x1',X(d));cur.setAttribute('x2',X(d));cur.setAttribute('visibility','visible');
   tip.innerHTML='<b>'+(d===0?'Election Day':d+' days before Election Day')+'</b>'+rows;tip.hidden=false;
   const bw=box.clientWidth,tw=tip.offsetWidth,px=X(d)*(r.width/W)+4;tip.style.left=Math.max(4,Math.min(bw-tw-4,px+12>bw-tw?px-tw-12:px+12))+'px';tip.style.top=(m.t*(r.height/H)+8)+'px'}
- hit.addEventListener('pointermove',hover);hit.addEventListener('pointerdown',hover);
- box._hide=()=>{tip.hidden=true;cur.setAttribute('visibility','hidden');dots.forEach(c=>c.setAttribute('visibility','hidden'))};   // touch: the tip stays after lifting until a tap elsewhere
+ hit.addEventListener('pointermove',hover);hit.addEventListener('pointerdown',e=>{const was=tip.hidden?null:box._d;hover(e);if(e.pointerType!=='mouse'&&was!=null&&was===box._d)box._hide()});   // ui_round37: tap the same day again to close
+ box._hide=()=>{box._d=null;tip.hidden=true;cur.setAttribute('visibility','hidden');dots.forEach(c=>c.setAttribute('visibility','hidden'))};   // touch: the tip stays after lifting until a tap elsewhere
  hit.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')box._hide()});
  const now=HIST[mode]['2026'].filter(p=>p[0]>=0),note=document.getElementById('hnote');
  if(!now.length)note.textContent=mode==='inperson'?'Early in-person voting for 2026 starts Oct. 19, 15 days before Election Day. The past lines show what to compare against.':'No 2026 mail ballots yet.';
@@ -1095,7 +1142,7 @@ function drawTurnout(){   // turnout bar (ui_v4; ui_round18: follows the tab)
  const F=JSON.parse(document.getElementById('figs').textContent);
  const R=REGCTY[0],n={};B.forEach(b=>{n[b[3]]=(n[b[3]]||0)+b[12]});const tot=F.ctot||BN(),share=tot/R;const MFT=window.MF,shareT=MFT?(({M:F.mtot,E:F.evtot,D:F.edtot}[MFT])||0)/R:share;
  let x=0,h='';[['M','Mail','var(--slate)'],['E','Early in person','var(--blue)'],['D','Election Day','var(--ink)']].forEach(([k,l,c])=>{if(MFT&&k!==MFT){n[k]=0;return}const DS=(F.daily||[]).reduce((a,r)=>{a.M+=r[1]||0;a.E+=r[2]||0;a.D+=r[3]||0;return a},{M:0,E:0,D:0}),v=DS.M+DS.E+DS.D?DS[k]:(k==='M'?(n.M||0)+(tot-BN()):(n[k]||0));n[k]=v;if(!v)return;const w=100*v/R;h+='<i style="left:'+x+'%;width:max(3px,'+w+'%);background:'+c+'" title="'+l+': '+v.toLocaleString()+'"></i>';x+=w});
- const marks=Object.entries(VRHIST).filter(([y,[vr,to]])=>y==='2018'||y==='2022'||shareT>to/vr).sort((a,b)=>a[1][1]/a[1][0]-b[1][1]/b[1][0]);
+ const marks=Object.entries(VRHIST).filter(([y,[vr,to]])=>y==='2018'||y==='2022'||y==='2024'||shareT>to/vr).sort((a,b)=>a[1][1]/a[1][0]-b[1][1]/b[1][0]);
  const labs=[[100,'100%','end1'],[Math.min(100,100*shareT),'2026 so far: '+pctf(shareT),'now']];if(shareT>.08)labs.push([0,'0%','end0']);
  marks.forEach(([y,[vr,to]])=>{const p=100*to/vr;h+='<b style="left:'+p+'%"></b>';labs.push([p,y+' final: '+Math.round(p)+'%','past'])});
  box.innerHTML=h;sc.innerHTML=labs.map(([p,txt,c])=>'<em class="'+c+'" data-p="'+p+'">'+txt+'</em>').join('');
@@ -1694,7 +1741,7 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
   if(vs.value!=='sites'){vs.value='sites';vs.dispatchEvent(new Event('change'))}document.querySelectorAll('.viewbtns button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v==='sites')))}
  document.addEventListener('methodchange',()=>setTimeout(edEmpty,30));
 })();
-</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.12.0</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-10-23 18:35 CT</span><!--/VER--></footer>
+</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.13.0</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-10-23 18:35 CT</span><!--/VER--></footer>
 <script>(function(){   // ui_round29: the stamp goes at the end of the page's main column
  const f=document.getElementById('verfoot'),w=document.querySelector('.wrap');if(f&&w)w.appendChild(f)})();</script>
 <script>
@@ -1782,10 +1829,49 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
  const _ph=panelHTML;panelHTML=function(c,t,sub){const h=_ph(c,t,sub);if(shade!=='rem')return h;const m='<div class="pgrid"><div>',i=h.indexOf(m);return i<0?h:h.slice(0,i+m.length)+remHTML(c)+h.slice(i+m.length)};
  // the top card: one small line under the mail note
  function note(){const L=document.querySelector('.heroL');if(!L)return;let p=L.querySelector('.remnote');const k=key(),c=REM.cty[k];
-  const txt='About '+F(c[0])+' more '+({A:'votes expected by the time the polls close Nov. 3',E:'early votes expected through Oct. 30',D:'Election Day votes expected Nov. 3',M:'mail ballots expected by Election Day'})[k].replace(/^more Election/,'Election')+' (80% range: '+F(c[1])+' to '+F(c[2])+').';
+  const txt=F(c[0])+({A:' more votes expected by Election Day',E:' more early votes expected by Oct. 30',D:' Election Day votes expected',M:' more mail ballots expected by Election Day'})[k]+' (Range: '+F(c[1])+'–'+F(c[2])+')';   // ui_round37
+  if(window.MF!=='M')L.querySelectorAll('.mailnote').forEach(e=>e.remove());   // the mail note only on the Mail tab
   if(!p){p=document.createElement('p');p.className='remnote';const m=L.querySelector('.mailnote'),cta=L.querySelector('.cta');if(m)m.after(p);else if(cta)cta.before(p);else L.appendChild(p)}
-  p.textContent=k==='D'?txt.replace('About ','About ').replace('more Election','Election'):txt}
- const hero=document.querySelector('.heroL');if(hero)new MutationObserver(()=>{if(!hero.querySelector('.remnote'))note()}).observe(hero,{childList:true,subtree:true});
+  p.textContent=txt}
+ const hero=document.querySelector('.heroL');if(hero)new MutationObserver(()=>{if(!hero.querySelector('.remnote')||(window.MF!=='M'&&hero.querySelector('.mailnote')))note()}).observe(hero,{childList:true,subtree:true});
  document.addEventListener('methodchange',()=>setTimeout(()=>{note();if(shade==='rem'){setLegend();draw()}},40));note();
+})();
+</script><script>
+(function(){   // ui_round37: Pace without "2026 by day"; Time range as a pill; Find inside More options; combined panel rows
+ const $=id=>document.getElementById(id);
+ // Pace: always "Past years"; the SHOW switch goes
+ const pv=$('paceview');if(pv){if(pv.value!=='cmp'){pv.value='cmp';pv.dispatchEvent(new Event('change'));if(pv.onchange)pv.onchange()}const l=pv.closest('label');if(l)l.remove()}
+ // Time range: two choices, as a pill like Scale
+ const tr=document.querySelector('.ctlgrid select[aria-label="Time range"]');
+ if(tr){[...tr.options].forEach(o=>{if(o.value==='20')o.remove()});const l=tr.closest('label');
+  const g=document.createElement('div');g.className='viewbtns sm';g.setAttribute('role','group');g.setAttribute('aria-label','Time range');
+  [...tr.options].forEach(o=>{const b=document.createElement('button');b.type='button';b.dataset.v=o.value;b.textContent=o.value==='all'?'Through Election Day':o.textContent;
+   b.onclick=()=>{if(tr.value!==o.value){tr.value=o.value;tr.dispatchEvent(new Event('change'));if(tr.onchange)tr.onchange()}sync()};g.appendChild(b)});
+  const sync=()=>g.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===tr.value)));
+  tr.classList.add('pillsrc');tr.after(g);sync();if(l){l.classList.add('pl');l.addEventListener('click',e=>{if(!e.target.closest('button'))e.preventDefault()})}
+  document.addEventListener('click',()=>setTimeout(sync,60),true)}
+ // Find on the map: inside More options, first
+ const mo=$('moreopt'),fd=document.querySelector('.cgfind .find');
+ if(mo&&fd){mo.querySelector('summary').after(fd);const fi=$('findin');if(fi){const f0=fi.focus.bind(fi);fi.focus=o=>{mo.open=true;f0(o)}}}
+ // details panel: one row for the March primary and 2024 president, one for age and gender
+ const grab=(h,title)=>{const a=h.indexOf('<details><summary>'+title+' <span>');if(a<0)return null;const e=h.indexOf('</details>',a);if(e<0)return null;
+  const blk=h.slice(a,e+10),m=blk.match(/^<details><summary>[^<]*<span>([\s\S]*?)<\/span><\/summary>([\s\S]*)<\/details>$/);return m?{a,e:e+10,syn:m[1],body:m[2]}:null};
+ function merge(h,t1,t2,name,lab1,lab2,f1,f2){const x=grab(h,t1),y=grab(h,t2);if(!x||!y)return h;
+  const blk='<details><summary>'+name+' <span>'+[f1(x.syn),f2(y.syn)].join(' ✦ ')+'</span></summary><div class="agehd">'+lab1+'</div>'+x.body+'<div class="agehd">'+lab2+'</div>'+y.body+'</details>';
+  const [p,q]=x.a<y.a?[x,y]:[y,x];return h.slice(0,p.a)+blk+h.slice(p.e,q.a)+h.slice(q.e)}
+ const short=t=>t.replace(' of ballots vs ',' vs ').replace(/ of ballots$/,'').replace(' of registered','');
+ const _ph=panelHTML;panelHTML=function(c,t,sub){let h=_ph(c,t,sub);
+  h=merge(h,'March 2026 primary','2024 president','Past elections','March 2026 primary','2024 president',v=>'Primary '+v,v=>'2024 president '+v);
+  h=merge(h,'Age','Gender','Age and gender','Age','Gender',short,short);return h};
+ // (i) buttons: their names skip the hidden section numbers ("About pace", not "About 02pace")
+ document.querySelectorAll('button.info[aria-label]').forEach(b=>b.setAttribute('aria-label',b.getAttribute('aria-label').replace(/^About \d+\s*/,'About ')));
+ // formulas in How this works can scroll sideways on narrow screens: keyboard users can reach them
+ document.querySelectorAll('#howdlg math').forEach(m=>{m.tabIndex=0});
+ // leaving the Election Day tab (which opens on the vote center map before votes) goes back to Ballot returns
+ let lastMF=window.MF;document.addEventListener('methodchange',()=>setTimeout(()=>{const vs=$('viewsel');
+  if(lastMF==='D'&&window.MF!=='D'&&vs&&vs.value==='sites'){vs.value='pct';vs.dispatchEvent(new Event('change'));const g=vs.nextElementSibling;if(g&&g.classList.contains('viewbtns'))g.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v==='pct')))}
+  lastMF=window.MF},60));
+ // precincts: no "On the ballot" row before results (the districts are listed at the top); other views keep their race
+ const _b=ballotHTML;ballotHTML=function(c){const h=_b(c);return layer==='pct'&&!c.ids&&!/results in this precinct/.test(h)?'':h};
 })();
 </script></body></html>
