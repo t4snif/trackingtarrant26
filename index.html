@@ -611,9 +611,12 @@ details.more .find{margin:8px 0 12px}
 #lhchart,#lhchart *{-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
 .snapbar:not(.sitesnap) .snaphint{margin-left:auto}#snapmode{margin-left:4px}   /* ui_round46 */
 @media (max-width:760px){#snapmode{margin-left:auto}}
-.snaphd .lbl{display:inline-block;min-width:7.9em}.sitesnap .snaphd .lbl{min-width:12.1em}   /* ui_round47: a header that never changes width */
-.snaphd>b{display:inline-block;min-width:2.9em;font-variant-numeric:tabular-nums}
-.snaphd .snaplat[hidden]{display:inline-block!important;visibility:hidden}
+.snaphd .snaplat,.snaphd .snaplat[hidden]{display:none!important}   /* ui_round48: one line, no LATEST */
+.snapbar .snaphd{flex-wrap:nowrap;align-items:center;gap:8px}.snaphd>b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.snapbar .snaphd .viewbtns{margin-left:auto;flex:none}.snapbar .snaphd .snaphint{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#snapmode{margin-left:4px}.snapbar:not(.sitesnap) .snaphint{margin-left:auto}
+@media (max-width:760px){#snapmode{margin-left:auto}}
+@media (max-width:600px){.snapbar .snaphd .lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.snapbar .snaphd .viewbtns.sm button{min-height:32px;padding:5px 11px;font-size:.8rem}}
 </style></head><body><main>
 <!--HERO-->
 <header class="mast"><span class="upd" id="upd" data-at="2026-10-27T19:55:06-05:00">MAIL BALLOT REPORT MADE 10.27, 7:55:06 PM CT</span></header>
@@ -1804,7 +1807,7 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
   if(vs.value!=='sites'){vs.value='sites';vs.dispatchEvent(new Event('change'))}document.querySelectorAll('.viewbtns button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v==='sites')))}
  document.addEventListener('methodchange',()=>setTimeout(edEmpty,30));
 })();
-</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.20.0</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-10-27 19:55 CT</span><!--/VER--></footer>
+</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.20.1</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-10-27 19:55 CT</span><!--/VER--></footer>
 <script>(function(){   // ui_round29: the stamp goes at the end of the page's main column
  const f=document.getElementById('verfoot'),w=document.querySelector('.wrap');if(f&&w)w.appendChild(f)})();</script>
 <script>
