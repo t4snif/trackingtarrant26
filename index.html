@@ -1866,7 +1866,7 @@ window.EDC=(function(){try{const R=JSON.parse((document.getElementById('resultsd
   if(vs.value!=='sites'){vs.value='sites';vs.dispatchEvent(new Event('change'))}document.querySelectorAll('.viewbtns button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v==='sites')))}
  document.addEventListener('methodchange',()=>setTimeout(edEmpty,30));
 })();
-</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.23.0</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-11-03 19:35 CT</span><!--/VER--></footer>
+</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.23.1</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-11-03 19:35 CT</span><!--/VER--></footer>
 <script>(function(){   // ui_round29: the stamp goes at the end of the page's main column
  const f=document.getElementById('verfoot'),w=document.querySelector('.wrap');if(f&&w)w.appendChild(f)})();</script>
 <script>
@@ -1955,7 +1955,7 @@ window.EDC=(function(){try{const R=JSON.parse((document.getElementById('resultsd
  // the top card: one small line under the mail note
  function note(){const L=document.querySelector('.heroL');if(!L)return;let p=L.querySelector('.remnote');const k=key(),c=REM.cty[k];
   const E2=window.EDC,cd=REM.cty.D||c,rg=' (Range: '+F(cd[1])+'–'+F(cd[2])+')';   // ui_round52: once Election Day ballots are being counted
-  const txt=E2&&k==='A'?'Includes '+E2.n.toLocaleString()+' Election Day ballots counted so far, of about '+F(cd[0])+' expected'+rg:E2&&k==='D'?'Counted as of '+E2.run+', of about '+F(cd[0])+' Election Day votes expected'+rg:F(c[0])+({A:' more votes expected by Election Day',E:' more early votes expected by Oct. 30',D:' Election Day votes expected',M:' more mail ballots expected by Election Day'})[k]+' (Range: '+F(c[1])+'–'+F(c[2])+')';   // ui_round37
+  const txt=E2&&k==='A'?'Includes '+E2.n.toLocaleString()+' Election Day ballots counted so far':E2&&k==='D'?'Counted as of '+E2.run:F(c[0])+({A:' more votes expected by Election Day',E:' more early votes expected by Oct. 30',D:' Election Day votes expected',M:' more mail ballots expected by Election Day'})[k]+' (Range: '+F(c[1])+'–'+F(c[2])+')';   // ui_round37
   if(window.MF!=='M')L.querySelectorAll('.mailnote').forEach(e=>e.remove());   // the mail note only on the Mail tab
   if(!p){p=document.createElement('p');p.className='remnote';const m=L.querySelector('.mailnote'),cta=L.querySelector('.cta');if(m)m.after(p);else if(cta)cta.before(p);else L.appendChild(p)}
   p.textContent=txt}
