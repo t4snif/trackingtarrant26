@@ -1557,6 +1557,7 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
  const RC=RES.races,P=RES.pct,CT=RES.cty||{},PCT=Object.keys(P).length>0,AIX={com:0,jp:1,cd:2,sd:3,hd:4,sboe:5};
  const NOPCT='Precinct-by-precinct results aren’t posted yet. So far the county has posted countywide totals only; the shading and estimate here are from before results.';
  const ORD={DEM:0,GRN:1,IND:2,LIB:3,REP:4,'':5},PN={DEM:'Democratic',REP:'Republican',LIB:'Libertarian',GRN:'Green',IND:'Independent','':'Write-in'};
+ const WI=x=>/\(W\)\s*$/.test(x[0])||/^write[- ]?in\b/i.test(x[0]);   // ui_round56: write-ins are marked "(W)" by the county; nonpartisan candidates have no party either
  const SEN=Math.max(0,RC.findIndex(r=>r.top==='senate')),JUD=RC.findIndex(r=>r.top==='judge');window.RACE=String(SEN);
  const MI=()=>({M:0,E:1,D:2})[window.MF],METH=()=>({M:'mail votes',E:'early in-person votes',D:'Election Day votes'})[window.MF]||'votes';
  const has=(ri,party)=>RC[ri].c.some(x=>x[1]===party),contested=ri=>has(ri,'DEM')&&has(ri,'REP');
@@ -1569,7 +1570,7 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
  const dr=(ri,t)=>{let d=0,r=0;RC[ri].c.forEach(([n,p],i)=>{if(p==='DEM')d+=t[i];if(p==='REP')r+=t[i]});return [d,r]};
  const leadB=(d,r,cls)=>{const n=d+r,ld=Math.round(100*(d-r)/n);return ld>0?'<b class="'+(cls||'n')+' res d">D+'+ld+'</b>':ld<0?'<b class="'+(cls||'n')+' res r">R+'+(-ld)+'</b>':'<b class="'+(cls||'n')+' res">Even</b>'};
  // race heading: the lead where D and R both run, "Unopposed" in its place for a single candidate, else just the name
- const unop=ri=>RC[ri].c.filter(x=>x[1]).length===1;
+ const unop=ri=>RC[ri].c.filter(x=>!WI(x)).length===1;
  function head(ri,t,st){const tot=t?t.reduce((a,b)=>a+b,0):0,a='<div class="lead"'+(st?' style="'+st+'"':'')+'>';
   if(unop(ri))return a+'<span class="unop">Unopposed</span>'+RC[ri].l+'</div>';
   if(contested(ri)&&tot>=5)return a+leadB(...dr(ri,t))+RC[ri].l+'</div>';
@@ -1578,8 +1579,8 @@ document.addEventListener('pointerdown',e=>{['hchart','dchart'].forEach(id=>{con
  const leadT=(d,r)=>{const n=d+r;if(n<5)return '';const ld=Math.round(100*(d-r)/n);return ld>0?'<span class="d">D+'+ld+'</span>':ld<0?'<span class="r">R+'+(-ld)+'</span>':'Even'};
  const own=(L,id)=>RC.findIndex(r=>r.k===L&&r.d===String(+id)&&!r.sp&&!r.sub);
  const raceFor=(L,id)=>window.RACE==='own'?(AIX[L]!=null?own(L,id):SEN):+window.RACE;
- function table(ri,t){const tot=t.reduce((a,b)=>a+b,0);let rows=RC[ri].c.map(([n,p],i)=>[n,p,t[i]]).filter(r=>r[1]).sort((a,b)=>ORD[a[1]]-ORD[b[1]]);const wi=RC[ri].c.map((x,i)=>x[1]?0:t[i]),wn=RC[ri].c.filter(x=>!x[1]).length,ws=wi.reduce((a,b)=>a+b,0);if(wn)rows.push(['Write-in candidates ('+wn+')','',ws]);
-  return '<table class="rt">'+rows.map(([n,p,v])=>'<tr'+(p?'':' class="wi"')+'><td>'+n+'<span class="pty">'+PN[p]+'</span></td><td class="v">'+v.toLocaleString()+'</td><td class="p">'+(tot?(100*v/tot).toFixed(1)+'%':'–')+'</td></tr>').join('')+'</table>'}
+ function table(ri,t){const tot=t.reduce((a,b)=>a+b,0);let rows=RC[ri].c.map((x,i)=>[x[0],x[1],t[i],0,i]).filter(r=>!WI(RC[ri].c[r[4]])).sort((a,b)=>(ORD[a[1]]??5)-(ORD[b[1]]??5)||a[4]-b[4]);const wi=RC[ri].c.map((x,i)=>WI(x)?t[i]:0),wn=RC[ri].c.filter(WI).length,ws=wi.reduce((a,b)=>a+b,0);if(wn)rows.push(['Write-in candidates ('+wn+')','',ws,1]);   // ui_round56
+  return '<table class="rt">'+rows.map(([n,p,v,w])=>'<tr'+(w?' class="wi"':'')+'><td>'+n+(w?'<span class="pty">Write-in</span>':p?'<span class="pty">'+(PN[p]||p)+'</span>':'')+'</td><td class="v">'+v.toLocaleString()+'</td><td class="p">'+(tot?(100*v/tot).toFixed(1)+'%':'–')+'</td></tr>').join('')+'</table>'}
  function block(ri,pl,scope,t0){const t=t0||tally(ri,pl);if(!t)return '<div class="sub">No '+RC[ri].l+' results here yet.</div>';const tot=t.reduce((a,b)=>a+b,0);
   if(!tot)return head(ri,t)+'<div class="sub">No '+METH()+' counted yet.</div>';
   if(tot<5)return head(ri,t)+'<div class="sub">Fewer than 5 votes here.</div>';
@@ -1867,7 +1868,7 @@ window.EDC=(function(){try{const R=JSON.parse((document.getElementById('resultsd
   if(vs.value!=='sites'){vs.value='sites';vs.dispatchEvent(new Event('change'))}document.querySelectorAll('.viewbtns button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v==='sites')))}
  document.addEventListener('methodchange',()=>setTimeout(edEmpty,30));
 })();
-</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.24.0</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-11-04 17:10 CT</span><!--/VER--></footer>
+</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.24.1</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-11-04 17:10 CT</span><!--/VER--></footer>
 <script>(function(){   // ui_round29: the stamp goes at the end of the page's main column
  const f=document.getElementById('verfoot'),w=document.querySelector('.wrap');if(f&&w)w.appendChild(f)})();</script>
 <script>
