@@ -1701,7 +1701,7 @@ window.EDC=(function(){try{const R=JSON.parse((document.getElementById('resultsd
 (function(){const E=window.EDC,L=document.querySelector('.heroL');if(!E||!L)return;
  const F=JSON.parse(document.getElementById('figs').textContent),big=L.querySelector('.big'),bd=L.querySelector('.badge.lg');
  if(big){const t=((F.ctot||0)+E.n).toLocaleString();big.textContent=t;big.style.setProperty('--em',t.split('').reduce((a,ch)=>a+(ch===','?.3:.64),0).toFixed(2))}
- if(bd){const m=bd.textContent.match(/^\+([\d,]+) ON NOV\. 3$/);bd.textContent='+'+((m?+m[1].replace(/,/g,''):0)+E.n).toLocaleString()+' ON NOV. 3'}
+ if(bd){const m=bd.textContent.match(/^\+([\d,]+) ON NOV\. 3$/);if(m)bd.textContent='+'+(+m[1].replace(/,/g,'')+E.n).toLocaleString()+' ON NOV. 3'}   // ui_round57: a later day's badge stays
  if(typeof drawTurnout==='function')drawTurnout()})();
 </script><script>
 (function(){   // ui_round18: the top section follows the method tab
@@ -1868,7 +1868,7 @@ window.EDC=(function(){try{const R=JSON.parse((document.getElementById('resultsd
   if(vs.value!=='sites'){vs.value='sites';vs.dispatchEvent(new Event('change'))}document.querySelectorAll('.viewbtns button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v==='sites')))}
  document.addEventListener('methodchange',()=>setTimeout(edEmpty,30));
 })();
-</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.24.1</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-11-04 17:10 CT</span><!--/VER--></footer>
+</script><footer class="verfoot" id="verfoot"><!--VER--><span>v2.24.2</span> <span class="sep" aria-hidden="true">✦</span> <span>data 2026-11-04 17:10 CT</span><!--/VER--></footer>
 <script>(function(){   // ui_round29: the stamp goes at the end of the page's main column
  const f=document.getElementById('verfoot'),w=document.querySelector('.wrap');if(f&&w)w.appendChild(f)})();</script>
 <script>
